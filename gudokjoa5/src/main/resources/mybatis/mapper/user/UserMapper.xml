@@ -12,5 +12,6 @@
 			created_at,
 			profile_img
 		from user
+		where id = #{id}
 	</select>
 </mapper>
