@@ -50,7 +50,7 @@ data:
   DB_SERVER: mysql-0
   DB_PORT: "3306"
   DB_NAME: "mydb"
-  
+  TEST: a
 ---
 
 kind: Secret
@@ -100,3 +100,4 @@ spec:
                 name: gudokjoa5
                 port: 
                   number: 8080
+                  
