@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gudokjoa5.dao.UserDao">
+	<select id ="selectUser" parameterType="long"
+		resultType="com.gudokjoa5.model.User">
+		select 
+			id,
+			username,
+			bank_account,
+			is_active,
+			updated_at,
+			created_at,
+			profile_img
+		from user
+	</select>
+</mapper>
