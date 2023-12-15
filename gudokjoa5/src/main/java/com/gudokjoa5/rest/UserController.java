@@ -27,7 +27,7 @@ public class UserController {
 	@Autowired
 	private final UserService userService;
 	
-	@Operation(operationId="user", summary="사용자 정보 가져오기", description="사용자정보를 제공합니다.")
+	@Operation(operationId="users", summary="사용자 정보 가져오기", description="사용자정보를 제공합니다.")
 	@Parameters({
 		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
 	})
