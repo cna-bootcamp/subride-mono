@@ -31,7 +31,7 @@ public class UserController {
 	@Parameters({
 		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
 	})
-	@GetMapping("/user")
+	@GetMapping("/users")
 	public ResponseEntity <User> getUserById(@RequestParam(value="id") long id) {
 		return userService.getUserById(id);
 	}
