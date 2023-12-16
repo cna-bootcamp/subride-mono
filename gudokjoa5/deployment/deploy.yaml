@@ -60,8 +60,8 @@ metadata:
   namespace: joa5
 type: Opaque
 data:
-  DB_USERNAME: am9hNQo=
-  DB_PASSWORD: UEBzc3cwcmQkCg==
+  DB_USERNAME: am9hNQ==
+  DB_PASSWORD: UEBzc3cwcmQk
 
 ---
 
