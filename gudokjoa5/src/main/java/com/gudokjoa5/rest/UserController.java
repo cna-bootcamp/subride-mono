@@ -37,8 +37,8 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	
-	@GetMapping(value="/users", produces = "application/json")
-	@Operation(operationId="users", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
+	@GetMapping(value="/userlist", produces = "application/json")
+	@Operation(operationId="userlist", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
 	public ResponseEntity <List<User>> getUserList() {
 		return userService.getUserList();
 	}
