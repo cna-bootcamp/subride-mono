@@ -11,7 +11,7 @@
 		updated_at,
 		created_at,
 		profile_img
-		from user
+		from User
 		where id = #{id}
 	</select>
 	
@@ -25,6 +25,6 @@
 		updated_at,
 		created_at,
 		profile_img
-		from user
+		from User
 	</select>
 </mapper>
