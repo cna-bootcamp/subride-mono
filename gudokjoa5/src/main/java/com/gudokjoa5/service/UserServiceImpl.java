@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			user = userDao.selectUser(id);
+			System.out.println(user);
 		} catch(Exception e){
 			e.printStackTrace();
 		}

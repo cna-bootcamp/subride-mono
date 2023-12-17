@@ -19,7 +19,7 @@ public class OpenAPIConfig {
 				.license(new License().name("Apache 2.0").url("http://springdoc.org")))
 				.externalDocs(new ExternalDocumentation()
 				.description("Wiki Documentation")
-				.url("https://springshop.wiki.github.rog/docs"));
+				.url("https://springshop.wiki.github.org/docs"));
 	}
 	
 }
