@@ -41,21 +41,11 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	
-//	@GetMapping(value="/userlist", produces = "application/json")
-//	@Operation(operationId="userlist", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
-//	public ResponseEntity <List<User>> getUserList() {
-//		return userService.getUserList();
-//	}
-	
 	@GetMapping(value="/userlist", produces = "application/json")
 	@Operation(operationId="userlist", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
-	public List<User> getUserList() {
-		List<User> users = null;
-		try {
-			users = userDao.selectUserAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return users;
+	public ResponseEntity <List<User>> getUserList() {
+		return userService.getUserList();
 	}
+	
+
 }
