@@ -1,9 +1,10 @@
 package com.gudokjoa5.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,11 @@ public class UserController {
 	@GetMapping("/users")
 	public ResponseEntity <User> getUserById(@RequestParam(value="id") long id) {
 		return userService.getUserById(id);
+	}
+	
+	@GetMapping(value="/users", produces = "application/json")
+	@Operation(operationId="users", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
+	public ResponseEntity <List<User>> getUserList() {
+		return userService.getUserList();
 	}
 }

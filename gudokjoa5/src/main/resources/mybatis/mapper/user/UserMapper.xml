@@ -14,4 +14,17 @@
 		from user
 		where id = #{id}
 	</select>
+	
+	<select id="selectUserAll" 
+	resultType="com.gudokjoa5.model.User">
+		select
+		id,
+		username,
+		bank_account,
+		is_active,
+		updated_at,
+		created_at,
+		profile_img
+		from user
+	</select>
 </mapper>
