@@ -3,14 +3,14 @@
 <mapper namespace="com.gudokjoa5.dao.UserDao">
 	<select id ="selectUser" parameterType="long"
 		resultType="com.gudokjoa5.model.User">
-		select 
-			id,
-			username,
-			bank_account,
-			is_active,
-			updated_at,
-			created_at,
-			profile_img
+		select
+		id,
+		username,
+		bank_account,
+		is_active,
+		updated_at,
+		created_at,
+		profile_img
 		from user
 		where id = #{id}
 	</select>
