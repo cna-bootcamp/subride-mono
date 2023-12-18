@@ -45,8 +45,7 @@ podTemplate(
 			stage("Build Jar") {
 				container("maven") {
 					sh 'echo "Build jar under target directory"'
-					sh "cd gudokjoa5"
-					sh "mvn clean package -DskipTests"
+					sh "mvn clean package -f gudokjoa5 -DskipTests"
 				}
 			}
 
