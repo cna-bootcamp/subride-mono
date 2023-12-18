@@ -29,7 +29,7 @@ podTemplate(
         } 
 
 		//-- Read pipeline.properties and setting variables
-		def props = readProperties  file:"deployment/pipeline.properties"
+		def props = readProperties  file:"gudokjoa5/deployment/pipeline.properties"
 		
 		credentialRegistry=props["credentialRegistry"]
 		registry=props["registry"]
