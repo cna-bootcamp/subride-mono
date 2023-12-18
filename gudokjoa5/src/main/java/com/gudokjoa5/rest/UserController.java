@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gudokjoa5.dao.UserDao;
 import com.gudokjoa5.model.User;
 import com.gudokjoa5.service.UserService;
 
@@ -24,12 +24,11 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@CrossOrigin(origins="*", allowedHeaders = "*")
 public class UserController {
 
 	@Autowired
 	private final UserService userService;
-	
-	private final UserDao userDao;
 	
 	@Operation(operationId="users", summary="사용자 정보 가져오기", description="사용자정보를 제공합니다.")
 	@Parameters({
