@@ -18,6 +18,4 @@ public class UserSubscribeService {
 	private long subscribeserviceId;
 	private int billingDate; //정기결제일
 	private int isActive; // 활성화 여부
-	private Timestamp createdAt; // 생성시간(날짜) 
-	private Timestamp updatedAt; // 수정시간(날짜)
 }
