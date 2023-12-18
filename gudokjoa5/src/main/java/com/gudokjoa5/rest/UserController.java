@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gudokjoa5.dao.UserDao;
 import com.gudokjoa5.model.User;
 import com.gudokjoa5.service.UserService;
 
@@ -28,6 +29,8 @@ public class UserController {
 	@Autowired
 	private final UserService userService;
 	
+	private final UserDao userDao;
+	
 	@Operation(operationId="users", summary="사용자 정보 가져오기", description="사용자정보를 제공합니다.")
 	@Parameters({
 		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
@@ -43,4 +46,6 @@ public class UserController {
 	public ResponseEntity <List<User>> getUserList() {
 		return userService.getUserList();
 	}
+	
+
 }

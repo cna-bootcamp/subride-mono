@@ -8,8 +8,6 @@
 		username,
 		bank_account,
 		is_active,
-		updated_at,
-		created_at,
 		profile_img
 		from user
 		where id = #{id}
@@ -22,8 +20,6 @@
 		username,
 		bank_account,
 		is_active,
-		updated_at,
-		created_at,
 		profile_img
 		from user
 	</select>

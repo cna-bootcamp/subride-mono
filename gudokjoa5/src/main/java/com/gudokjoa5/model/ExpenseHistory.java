@@ -1,6 +1,6 @@
 package com.gudokjoa5.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +17,5 @@ public class ExpenseHistory {
 	private long categoryId;
 	private String expenseDetail;//지출상세
 	private long price; // 가격 
-	private Timestamp paidAt; //결제시각
+	private Date paidAt; //결제시각
 }
