@@ -25,7 +25,7 @@ podTemplate(
 {
 	node(label) {
 		stage("Get Source") {
-			git branch: 'main', url: 'https://github.com/happykubepia/mybatis-sample.git'
+			git branch: 'main', url: 'https://github.com/GudokJoa5/Backend.git'
         } 
 
 		//-- Read pipeline.properties and setting variables
