@@ -25,11 +25,11 @@ podTemplate(
 {
 	node(label) {
 		stage("Get Source") {
-			git branch: 'main', url: 'https://github.com/happykubepia/mybatis-sample.git'
+			git branch: 'main', url: 'https://github.com/GudokJoa5/Backend.git'
         } 
 
 		//-- Read pipeline.properties and setting variables
-		def props = readProperties  file:"deployment/pipeline.properties"
+		def props = readProperties  file:"gudokjoa5/deployment/pipeline.properties"
 		
 		credentialRegistry=props["credentialRegistry"]
 		registry=props["registry"]
@@ -45,7 +45,7 @@ podTemplate(
 			stage("Build Jar") {
 				container("maven") {
 					sh 'echo "Build jar under target directory"'
-					sh "mvn clean package -DskipTests"
+					sh "mvn clean package -f gudokjoa5 -DskipTests"
 				}
 			}
 
@@ -58,7 +58,7 @@ podTemplate(
 						)]) {
 						    sh 'echo user "$USER" pasword "$PASSWORD"'
 						    sh "podman login ${registry} --username ${USER} --password ${PASSWORD}"
-							sh "podman build -f ./deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg ARTIFACTORY_FILE=${repository}.jar ."
+							sh "podman build -f ./gudokjoa5/deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg ARTIFACTORY_FILE=${repository}.jar gudokjoa5"
 							sh "sleep 2"
 							sh "podman push ${registry}/${organization}/${repository}:${tag}"
 							sh "podman tag ${registry}/${organization}/${repository}:${tag} ${registry}/${organization}/${repository}:latest"
