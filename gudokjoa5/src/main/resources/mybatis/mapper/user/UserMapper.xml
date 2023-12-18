@@ -9,7 +9,7 @@
 		bank_account,
 		is_active,
 		profile_img
-		from User
+		from user
 		where id = #{id}
 	</select>
 	
@@ -21,6 +21,6 @@
 		bank_account,
 		is_active,
 		profile_img
-		from User
+		from user
 	</select>
 </mapper>
