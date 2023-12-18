@@ -13,7 +13,7 @@ public class OpenAPIConfig {
 	@Bean
 	OpenAPI userOpenAPI() {
 		return new OpenAPI()
-				.info(new Info().title("User API")
+				.info(new Info().title("SUBRIDE 승규야 고생했다.")
 				.description("SampleUser application")
 				.version("v0.0.1")
 				.license(new License().name("Apache 2.0").url("http://springdoc.org")))
