@@ -47,7 +47,7 @@ metadata:
   name: gudokjoa5
   namespace: joa5
 data:
-  DB_SERVER: mysql-0
+  DB_SERVER: mysql
   DB_PORT: "3306"
   DB_NAME: "mydb"
   TEST: a

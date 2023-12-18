@@ -23,6 +23,4 @@ public class User {
 	private String bankAccount; // 계좌번호
 	private String profileImg; // 프로필 사진
 	private int isActive; // 활성화 여부
-	private Timestamp createdAt; // 생성시간(날짜) 
-	private Timestamp updatedAt; // 수정시간(날짜)
 }
