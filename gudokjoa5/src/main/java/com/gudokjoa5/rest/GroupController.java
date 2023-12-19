@@ -24,7 +24,7 @@ public class GroupController {
 	@Autowired
 	private final GroupService groupService;
 	
-	@Operation(operationId="groups", summary="그룹 정 가져오기", description="그룹 정보 제공합니다.")
+	@Operation(operationId="groups", summary="그룹 정보 가져오기", description="하나의 그룹 정보 상세 내용을 제공합니다.")
 	@GetMapping("/groups")
 	public ResponseEntity <GroupDTO> getGroupById(long id) {	
 		return groupService.getGroup(id);

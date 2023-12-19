@@ -25,13 +25,15 @@
 	</select>
 	
 	<select id="getUserByGroupId" 
-	resultType="com.gudokjoa5.model.User">
+	resultType="com.gudokjoa5.model.User"
+	parameterType="long"
+	>
 		SELECT us.id, us.username, us.bank_account, us.is_active, us.profile_img
 		FROM (
 		select u.user_id
 		FROM usergroup u 
-		where u.group_id = 1
+		where u.group_id = #{id}
 		) T1 inner join `user` us
-		on T1.user_id = us.id;
+		on T1.user_id = us.id
 	</select>
 </mapper>

@@ -3,15 +3,15 @@
 <mapper namespace="com.gudokjoa5.dao.GroupDao">
 	<select id="getGroup" parameterType="long"
 	resultType="com.gudokjoa5.model.Group">
-		select
-		id,
-		subscribeserviceId,
-		groupAccount,
-		leaderUser,
-		isActive,
-		groupName,
-		billigDate
-		from group
-		where id = #{id}
+	select g.id, 
+	g.subscribe_id, 
+	g.group_account, 
+	g.leader_user, 
+	g.is_active, 
+	g.group_name, 
+	g.billing_date, 
+	g.invitation_code
+	from `group` g
+	where id = #{id}
 	</select>
 </mapper>
