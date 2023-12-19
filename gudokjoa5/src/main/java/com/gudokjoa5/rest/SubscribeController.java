@@ -68,7 +68,19 @@ public class SubscribeController {
 		return subscribeService.getTotalFee(id);
 	}
 	
-	
+	/**
+	 * @설명 : 구독서비스 하나에 대한 정보 보여주기
+	 * @param : id - 구독서비스 아이디
+	 * */
+	@Operation(operationId="detail", summary="구독서비스 하나에 대한 정보 보여주기", 
+			description="하나의 구독서비스 상세내용을 가져옵니다.")
+	@Parameters({
+		@Parameter(name = "id", in = ParameterIn.QUERY, description = "구독서비스의 id", required=true)
+	})
+	@GetMapping(value="/subscribe/detail")
+	public ResponseEntity<SubscribeDTO> getSubscribeDetail(@RequestParam(value="id") long id) {
+		return subscribeService.getSubscribeDetail(id);
+	}
 	/**
 	 * @설명 : 사용자가 신규등록 가능한 구독서비스 리스트 보여주기
 	 * @param: id - 사용자아이디

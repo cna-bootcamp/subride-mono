@@ -20,4 +20,13 @@
 		where u.user_id = #{id}
 		group by u.user_id
 	</select>
+	
+	
+	<select id = "getSubscribeDetail" parameterType="long"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select s.id, s.service_name, c.name, s.fee, s.description ,s.logo 
+		from subscribe s inner join category c 
+		on s.category_id  = c.id
+		where s.id = #{id}
+	</select>
 </mapper>

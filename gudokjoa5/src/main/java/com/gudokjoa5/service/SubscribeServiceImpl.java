@@ -60,5 +60,17 @@ public class SubscribeServiceImpl implements SubscribeService {
 		return new ResponseEntity<TotalFeeDTO> (totalFeeDTO, HttpStatus.OK);
 	}
 
+
+	@Override
+	public ResponseEntity<SubscribeDTO> getSubscribeDetail(long id) {
+		SubscribeDTO subscribeDTO = null;
+		try {
+			subscribeDTO = subscribeDao.getSubscribeDetail(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity <SubscribeDTO> (subscribeDTO, HttpStatus.OK);
+	}
+
 	
 }

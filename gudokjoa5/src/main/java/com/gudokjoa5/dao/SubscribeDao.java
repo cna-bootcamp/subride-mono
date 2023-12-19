@@ -13,5 +13,8 @@ import com.gudokjoa5.dto.TotalFeeDTO;
 public interface SubscribeDao {
 
 	List<SubscribeDTO> getSusbscribeList(long id) throws Exception;
+	
 	TotalFeeDTO getTotalFee(long id) throws Exception;
+	
+	SubscribeDTO getSubscribeDetail(long id) throws Exception;
 }

@@ -17,4 +17,6 @@ public interface SubscribeService {
 	public ResponseEntity <List<SubscribeDTO>> getSusbscribeList(long id);
 	
 	public ResponseEntity<TotalFeeDTO> getTotalFee(long id);
+	
+	public ResponseEntity<SubscribeDTO> getSubscribeDetail(long id);
 }
