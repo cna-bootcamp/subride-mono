@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.TotalFeeDTO;
 import com.gudokjoa5.service.SubscribeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,12 +55,16 @@ public class SubscribeController {
 	/**
 	 * @param: id - 사용자아이디
 	 * */
-//	@Operation(operationId="totalfee", summary="자신이 구독하고 있는 서비스 총 결제금액 가져오기", 
-//			description="총 결제 금액을 가져옵니다.")
-//	@Parameters({
-//		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
-//	})
-//	@GetMapping(value="/subscribe/totalfee")
+	@Operation(operationId="totalfee", summary="자신이 구독하고 있는 서비스 총 결제금액 가져오기", 
+			description="총 결제 금액을 가져옵니다.")
+	@Parameters({
+		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
+	})
+	@GetMapping(value="/subscribe/totalfee")
+	public ResponseEntity<TotalFeeDTO> getTotalFee(@RequestParam(value="id") long id){
+		
+		return subscribeService.getTotalFee(id);
+	}
 	
 	
 //	public Object getSusbscribeList(@RequestParam(value = "id") long id) {

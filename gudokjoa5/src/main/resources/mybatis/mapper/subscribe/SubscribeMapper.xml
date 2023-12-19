@@ -12,4 +12,12 @@
 		on t1.category_id = c.id
 	</select>
 	
+	<select id = "getTotalFee" parameterType="long"
+		resultType="com.gudokjoa5.dto.TotalFeeDTO">
+		select u.user_id, sum(s.fee) total_fee
+		from subscribe s inner join usersubscribe u 
+		on s.id = u.subscribe_id
+		where u.user_id = #{id}
+		group by u.user_id
+	</select>
 </mapper>

@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.TotalFeeDTO;
 
 @Mapper
 @Repository
 public interface SubscribeDao {
 
 	List<SubscribeDTO> getSusbscribeList(long id) throws Exception;
+	TotalFeeDTO getTotalFee(long id) throws Exception;
 }
