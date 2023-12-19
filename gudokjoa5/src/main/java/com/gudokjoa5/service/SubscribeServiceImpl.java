@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudokjoa5.dao.SubscribeDao;
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.TotalFeeDTO;
 
 /**
  * @작성자 : 곽승규
@@ -42,6 +43,33 @@ public class SubscribeServiceImpl implements SubscribeService {
 		}
 		
 		return new ResponseEntity<List<SubscribeDTO>> (list, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<TotalFeeDTO> getTotalFee(long id) {
+		
+		TotalFeeDTO totalFeeDTO = null;
+		try {
+			log.info("Start db select");
+			totalFeeDTO = subscribeDao.getTotalFee(id);
+			System.out.println("list : " + totalFeeDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<TotalFeeDTO> (totalFeeDTO, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<SubscribeDTO> getSubscribeDetail(long id) {
+		SubscribeDTO subscribeDTO = null;
+		try {
+			subscribeDTO = subscribeDao.getSubscribeDetail(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity <SubscribeDTO> (subscribeDTO, HttpStatus.OK);
 	}
 
 	
