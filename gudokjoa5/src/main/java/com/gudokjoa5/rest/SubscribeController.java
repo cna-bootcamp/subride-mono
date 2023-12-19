@@ -40,6 +40,7 @@ public class SubscribeController {
 	private final SubscribeService subscribeService;
 	
 	/**
+	 * @설명 : 사용자가 구독한 서비스 목록 보여주기
 	 * @param: id - 사용자아이디
 	 * */
 	@Operation(operationId="subscribelist", summary="구독한 서비스리스트 가져오기", 
@@ -53,6 +54,7 @@ public class SubscribeController {
 	}
 	
 	/**
+	 * @설명 : 사용자가 구독한 서비스들의 총 결제 금액
 	 * @param: id - 사용자아이디
 	 * */
 	@Operation(operationId="totalfee", summary="자신이 구독하고 있는 서비스 총 결제금액 가져오기", 
@@ -67,18 +69,9 @@ public class SubscribeController {
 	}
 	
 	
-//	public Object getSusbscribeList(@RequestParam(value = "id") long id) {
-//		
-//		ResponseEntity<List<SubscribeListDTO>> list = null;
-//		
-//		list = subscribeService.getSusbscribeList(id);
-//		
-//		//response할 객체 생성
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		
-//		map.put("subscribeList", list);
-//		map.put("message", "사용자가 구독하고 있는 리스트 가져오기 성공");
-//		return map;
-//	}
+	/**
+	 * @설명 : 사용자가 신규등록 가능한 구독서비스 리스트 보여주기
+	 * @param: id - 사용자아이디
+	 * */
 	
 }
