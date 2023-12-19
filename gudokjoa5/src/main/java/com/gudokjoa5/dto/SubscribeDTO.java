@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class SubscribeListDTO {
+public class SubscribeDTO {
 
 	private long serviceId; // 구독서비스 id
 	private String serviceName; // 서비스명

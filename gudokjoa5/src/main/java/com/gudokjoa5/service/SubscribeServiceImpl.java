@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.gudokjoa5.dao.SubscribeDao;
-import com.gudokjoa5.dto.SubscribeListDTO;
+import com.gudokjoa5.dto.SubscribeDTO;
 
 /**
  * @작성자 : 곽승규
@@ -30,8 +30,8 @@ public class SubscribeServiceImpl implements SubscribeService {
 	 * @param : id : 사용자의 아이디
 	 * */
 	@Override
-	public ResponseEntity<List<SubscribeListDTO>> getSusbscribeList(long id) {
-		List<SubscribeListDTO> list = null;
+	public ResponseEntity<List<SubscribeDTO>> getSusbscribeList(long id) {
+		List<SubscribeDTO> list = null;
 		
 		try {
 			log.info("Start db select");
@@ -41,7 +41,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 			e.printStackTrace();
 		}
 		
-		return new ResponseEntity<List<SubscribeListDTO>> (list, HttpStatus.OK);
+		return new ResponseEntity<List<SubscribeDTO>> (list, HttpStatus.OK);
 	}
 
 	

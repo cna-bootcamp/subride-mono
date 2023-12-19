@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gudokjoa5.dao.SubscribeDao">
 	<select id = "getSusbscribeList" parameterType="long"
-		resultType="com.gudokjoa5.dto.SubscribeListDTO">
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
 		select t1.id, t1.service_name, c.name, t1.fee, t1.description,t1.logo 
 		from (select s.id, s.service_name, s.fee, s.category_id, s.logo, s.description
 		from subscribe s inner join usersubscribe u 

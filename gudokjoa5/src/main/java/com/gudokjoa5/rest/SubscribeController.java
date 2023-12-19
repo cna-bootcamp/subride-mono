@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gudokjoa5.dto.SubscribeListDTO;
+import com.gudokjoa5.dto.SubscribeDTO;
 import com.gudokjoa5.service.SubscribeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,20 +28,39 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api")
 @CrossOrigin(origins="*", allowedHeaders = "*")
 
+
+/**
+ * @작성자 : 곽승규
+ * */
+
 public class SubscribeController {
 
 	@Autowired
 	private final SubscribeService subscribeService;
 	
+	/**
+	 * @param: id - 사용자아이디
+	 * */
 	@Operation(operationId="subscribelist", summary="구독한 서비스리스트 가져오기", 
 			description="구독한 서비스리스트를 가져옵니다.")
 	@Parameters({
 		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
 	})
 	@GetMapping(value = "/subscribe/mylist", produces = "application/json")
-	public ResponseEntity <List<SubscribeListDTO>> getSusbscribeList(@RequestParam(value = "id") long id) {
+	public ResponseEntity <List<SubscribeDTO>> getSusbscribeList(@RequestParam(value = "id") long id) {
 		return subscribeService.getSusbscribeList(id);
 	}
+	
+	/**
+	 * @param: id - 사용자아이디
+	 * */
+//	@Operation(operationId="totalfee", summary="자신이 구독하고 있는 서비스 총 결제금액 가져오기", 
+//			description="총 결제 금액을 가져옵니다.")
+//	@Parameters({
+//		@Parameter(name = "id", in = ParameterIn.QUERY, description = "user의 id", required=true)
+//	})
+//	@GetMapping(value="/subscribe/totalfee")
+	
 	
 //	public Object getSusbscribeList(@RequestParam(value = "id") long id) {
 //		
