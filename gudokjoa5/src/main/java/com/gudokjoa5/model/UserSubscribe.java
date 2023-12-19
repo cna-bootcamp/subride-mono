@@ -1,6 +1,5 @@
 package com.gudokjoa5.model;
 
-import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class UserSubscribeService {
+public class UserSubscribe {
 
 	private long id;
 	private long userId;
