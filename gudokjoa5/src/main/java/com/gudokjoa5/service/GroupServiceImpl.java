@@ -1,5 +1,6 @@
 package com.gudokjoa5.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,17 +36,59 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	@Override
 	@Transactional
 	public ResponseEntity<GroupDTO> getGroup(long id) {
-		GroupDTO groupDTO = null;
-		Group group = null;
-		List<User> users = null;
-		SubscribeDTO subscribeDTO = null;
-		User leaderUser = null;
+		GroupDTO groupDTO = groupDTO(id);
+//		try {
+//			Group group = null;
+//			List<User> users = null;
+//			SubscribeDTO subscribeDTO = null;
+//			User leaderUser = null;
+//			group = groupDao.getGroup(id);
+//			subscribeDTO = subscribeDao.getSubscribeDetail(group.getSubscribeserviceId());
+//			users = userDao.getUserByGroupId(group.getId());
+//			leaderUser = userDao.selectUser(group.getLeaderUser());
+//
+//			groupDTO = new GroupDTO(
+//						group.getId(),
+//						group.getGroupName(),
+//						group.getBilligDate(),
+//						leaderUser.getUsername(),
+//						subscribeDTO,
+//						users
+//					);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		return new ResponseEntity<GroupDTO> (groupDTO, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<List<GroupDTO>> getGroupList() {
+		List<GroupDTO> groupDTOList = new LinkedList<>();
 		try {
+			List<Group> groupList = groupDao.getGroupList();
+			for(Group group: groupList) {
+				groupDTOList.add(groupDTO(group.getId()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<GroupDTO>> (groupDTOList, HttpStatus.OK);
+	}
+	
+	@Transactional
+	private GroupDTO groupDTO(long id) {
+		GroupDTO groupDTO = null;
+		try {
+			Group group = null;
+			List<User> users = null;
+			SubscribeDTO subscribeDTO = null;
+			User leaderUser = null;
 			group = groupDao.getGroup(id);
 			subscribeDTO = subscribeDao.getSubscribeDetail(group.getSubscribeserviceId());
 			users = userDao.getUserByGroupId(group.getId());
 			leaderUser = userDao.selectUser(group.getLeaderUser());
-
 
 			groupDTO = new GroupDTO(
 						group.getId(),
@@ -58,8 +101,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return new ResponseEntity<GroupDTO> (groupDTO, HttpStatus.OK);
+		return groupDTO;
 	}
 
 }
