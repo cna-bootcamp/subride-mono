@@ -12,4 +12,66 @@
 		on t1.category_id = c.id
 	</select>
 	
+	<select id = "getTotalFee" parameterType="long"
+		resultType="com.gudokjoa5.dto.TotalFeeDTO">
+		select u.user_id, sum(s.fee) total_fee
+		from subscribe s inner join usersubscribe u 
+		on s.id = u.subscribe_id
+		where u.user_id = #{id}
+		group by u.user_id
+	</select>
+	
+	
+	<select id = "getSubscribeDetail" parameterType="long"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select s.id, s.service_name, c.name, s.fee, s.description ,s.logo 
+		from subscribe s inner join category c 
+		on s.category_id  = c.id
+		where s.id = #{id}
+	</select>
+	
+	<select id = "getCanSubList" parameterType="long"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select Ta1.id, Ta1.service_name, Ta1.fee, Ta1.category_id, Ta1.logo, Ta1.description
+		from (select s.id, s.service_name, s.fee, s.category_id, s.logo, s.description
+			from subscribe s inner join usersubscribe u 
+			on s.id = u.subscribe_id
+			where u.user_id = #{id}
+		) Ta1 inner join (
+			select A1.subscribe_id
+			from (
+				select t1.subscribe_id
+				from (select s.category_id, u.subscribe_id
+					from subscribe s inner join usersubscribe u 
+					on s.id = u.subscribe_id
+					where u.user_id = #{id}
+				) t1 inner join category c 
+				on t1.category_id = c.id
+			) A1 left join (
+				select g.subscribe_id 
+				from `group` g inner join usergroup u 
+				on g.id  = u.group_id
+				where u.user_id = #{id}
+			) A2 on A1.subscribe_id = A2.subscribe_id
+			WHERE  A2.subscribe_id is NULL
+		) Ta2
+		on Ta1.id = Ta2.subscribe_id;
+	</select>
+	
+	<select id = "getCanEnrollSubscribe" parameterType="long"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select T1.id, T1.service_name, T1.fee, T1.category_id, T1.description, T1.logo
+		from subscribe T1 left outer join (
+			select t1.subscribe_id
+			from (select s.category_id, u.subscribe_id
+				from subscribe s inner join usersubscribe u 
+					on s.id = u.subscribe_id
+				where u.user_id = #{id}
+				) t1 inner join category c 
+		on t1.category_id = c.id
+		) T2
+		on T1.id = T2.subscribe_id
+		where T2.subscribe_id is null
+	</select>
+	
 </mapper>
