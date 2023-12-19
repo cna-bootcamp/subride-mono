@@ -13,4 +13,6 @@ public interface UserDao {
 
 	List<User> selectUserAll() throws Exception;
 	User selectUser(long id) throws Exception;
+	
+	List<User> getUserByGroupId(long id) throws Exception;
 }

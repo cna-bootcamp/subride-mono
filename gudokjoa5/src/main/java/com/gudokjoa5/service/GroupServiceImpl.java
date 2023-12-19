@@ -39,12 +39,27 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		Group group = null;
 		List<User> users = null;
 		SubscribeDTO subscribeDTO = null;
+		User leaderUser = null;
 		try {
 			group = groupDao.getGroup(id);
-			long subscribeId = group.getSubscribeserviceId();
-			subscribeDTO = subscribeDao.getSubscribeDetail(subscribeId);
-			//users = userDao.
+			subscribeDTO = subscribeDao.getSubscribeDetail(group.getSubscribeserviceId(););
+			users = userDao.getUserByGroupId(group.getId());
+			leaderUser = userDao.selectUser(group.getLeaderUser());
+//			private long id;
+//			private String groupName;
+//			private int billingDate;
+//			private String leaderUsername;
+//			private SubscribeDTO subscribeDTO;
+//			private List<User> users; 
 
+			groupDTO = new GroupDTO(
+						group.getId(),
+						group.getGroupName(),
+						group.getBilligDate(),
+						leaderUser.getUsername(),
+						subscribeDTO,
+						users
+					);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

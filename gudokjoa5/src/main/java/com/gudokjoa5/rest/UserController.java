@@ -46,5 +46,14 @@ public class UserController {
 		return userService.getUserList(); // 주석
 	}
 	
+	@Operation(operationId="users", summary ="그룹에 속한 사용자 목록 가져오기", description="  그룹에 속한 사용자 목록을 제공합니다.")
+	@Parameters({
+		@Parameter(name = "groupId", in = ParameterIn.QUERY, description = "group id", required=true)
+	})
+	@GetMapping("/users")
+	public ResponseEntity<List<User>> getUserListByGroupId(@RequestParam(value="groupId") long id) {
+		return userService.getUserListByGroupId(id);
+	}
+	
 
 }
