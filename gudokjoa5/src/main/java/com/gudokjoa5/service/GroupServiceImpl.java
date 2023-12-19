@@ -41,9 +41,9 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		SubscribeDTO subscribeDTO = null;
 		try {
 			group = groupDao.getGroup(id);
-			//subscribeDTO = subscribeDao.getSusbscribeList(id);
-			
-			System.out.println("group : " + groupDTO);
+			long subscribeId = group.getSubscribeserviceId();
+			subscribeDTO = subscribeDao.getSubscribeDetail(subscribeId);
+			//users = userDao.
 
 		} catch (Exception e) {
 			e.printStackTrace();
