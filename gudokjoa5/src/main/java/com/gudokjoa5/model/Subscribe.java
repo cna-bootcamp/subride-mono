@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class SubscribeService {
+public class Subscribe {
 
 	private long id; // userID
 	private String serviceName; // 서비스네임
