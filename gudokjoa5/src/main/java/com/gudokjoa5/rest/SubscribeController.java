@@ -81,6 +81,21 @@ public class SubscribeController {
 	public ResponseEntity<SubscribeDTO> getSubscribeDetail(@RequestParam(value="id") long id) {
 		return subscribeService.getSubscribeDetail(id);
 	}
+	
+	/**
+	 * @설명 : 사용자가 구독하고 있는 서비스들 중 SUB탈 수 있는 구독리스트 보여주기
+	 * @param: id - 사용자아이디
+	 * */
+	@Operation(operationId="canSub", summary="사용자가 구독하고 있는 서비스들 중 SUB탈 수 있는 구독리스트 보여주기", 
+			description="사용자가 SUB탈 수 있는 구독 리스트 보여주기")
+	@Parameters({
+		@Parameter(name = "id", in = ParameterIn.QUERY, description = "사용자의 id", required=true)
+	})
+	@GetMapping(value="/subscribe/cansub")
+	public ResponseEntity<List<SubscribeDTO>> CanSubList(@RequestParam(value="id") long id) {
+		return subscribeService.getCanSubList(id);
+	}
+	
 	/**
 	 * @설명 : 사용자가 신규등록 가능한 구독서비스 리스트 보여주기
 	 * @param: id - 사용자아이디

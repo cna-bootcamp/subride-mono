@@ -66,10 +66,24 @@ public class SubscribeServiceImpl implements SubscribeService {
 		SubscribeDTO subscribeDTO = null;
 		try {
 			subscribeDTO = subscribeDao.getSubscribeDetail(id);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity <SubscribeDTO> (subscribeDTO, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<SubscribeDTO>> getCanSubList(long id) {
+		List<SubscribeDTO> list = null;
+		try {
+			list = subscribeDao.getCanSubList(id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<SubscribeDTO>> (list, HttpStatus.OK);
 	}
 
 	

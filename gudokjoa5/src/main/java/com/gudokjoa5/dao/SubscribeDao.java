@@ -17,4 +17,6 @@ public interface SubscribeDao {
 	TotalFeeDTO getTotalFee(long id) throws Exception;
 	
 	SubscribeDTO getSubscribeDetail(long id) throws Exception;
+	
+	List<SubscribeDTO> getCanSubList(long id) throws Exception;
 }
