@@ -1,5 +1,7 @@
 package com.gudokjoa5.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,8 +27,17 @@ public class GroupController {
 	private final GroupService groupService;
 	
 	@Operation(operationId="groups", summary="그룹 정보 가져오기", description="하나의 그룹 정보 상세 내용을 제공합니다.")
-	@GetMapping("/groups")
+	@GetMapping("/group/detail")
 	public ResponseEntity <GroupDTO> getGroupById(long id) {	
 		return groupService.getGroup(id);
 	}
+	
+	@Operation(operationId="groups", summary="그룹 목 가져오기", description=" 사용자가 가입한 그룹 목록을 제공합니다.")
+	@GetMapping("/group/mylist")
+	public ResponseEntity <List<GroupDTO>> getGroupListById(long id) {	
+		return groupService.getGroupList(id);
+	}
+
+	
+	
 }

@@ -11,5 +11,5 @@ import com.gudokjoa5.model.Group;
 @Repository
 public interface GroupDao {
 	Group getGroup(long id) throws Exception; // 그룹의 간단한 정보만 가져오기
-	List<Group> getGroupList() throws Exception;
+	List<Group> getGroupList(long id) throws Exception;
 }

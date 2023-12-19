@@ -12,20 +12,26 @@
 	g.billing_date, 
 	g.invitation_code
 	from `group` g
-	where id = #{id}
+	where g.id = #{id}
 	</select>
 	
 	<select id="getGroupList" parameterType="long"
 	resultType="com.gudokjoa5.model.Group">
-	select g.id, 
-	g.subscribe_id, 
-	g.group_account, 
-	g.leader_user, 
-	g.is_active, 
-	g.group_name, 
-	g.billing_date, 
+	SELECT 
+	g.id,
+	g.subscribe_id,
+	g.group_account,
+	g.leader_user,
+	g.is_active,
+	g.group_name,
+	g.billing_date,
 	g.invitation_code
-	from `group` g
+	FROM (
+		select u.group_id
+		FROM usergroup u 
+		where u.user_id = #{id}
+	)	T1 inner join `group` g 
+	on T1.group_id  = g.id
 	</select>
 
 </mapper>

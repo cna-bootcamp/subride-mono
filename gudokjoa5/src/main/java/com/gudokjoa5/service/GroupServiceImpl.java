@@ -63,10 +63,10 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	}
 
 	@Override
-	public ResponseEntity<List<GroupDTO>> getGroupList() {
+	public ResponseEntity<List<GroupDTO>> getGroupList(long id) {
 		List<GroupDTO> groupDTOList = new LinkedList<>();
 		try {
-			List<Group> groupList = groupDao.getGroupList();
+			List<Group> groupList = groupDao.getGroupList(id);
 			for(Group group: groupList) {
 				groupDTOList.add(groupDTO(group.getId()));
 			}
