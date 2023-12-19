@@ -26,13 +26,13 @@ public class GroupController {
 	@Autowired
 	private final GroupService groupService;
 	
-	@Operation(operationId="groups", summary="그룹 정보 가져오기", description="하나의 그룹 정보 상세 내용을 제공합니다.")
+	@Operation(operationId="groupsdetail", summary="그룹 정보 가져오기", description="하나의 그룹 정보 상세 내용을 제공합니다.")
 	@GetMapping("/group/detail")
 	public ResponseEntity <GroupDTO> getGroupById(long id) {	
 		return groupService.getGroup(id);
 	}
 	
-	@Operation(operationId="groups", summary="그룹 목 가져오기", description=" 사용자가 가입한 그룹 목록을 제공합니다.")
+	@Operation(operationId="groupslist", summary="그룹 목록 가져오기", description=" 사용자가 가입한 그룹 목록을 제공합니다.")
 	@GetMapping("/group/mylist")
 	public ResponseEntity <List<GroupDTO>> getGroupListById(long id) {	
 		return groupService.getGroupList(id);
