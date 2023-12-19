@@ -57,4 +57,21 @@
 		) Ta2
 		on Ta1.id = Ta2.subscribe_id;
 	</select>
+	
+	<select id = "getCanEnrollSubscribe" parameterType="long"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select T1.id, T1.service_name, T1.fee, T1.category_id, T1.description, T1.logo
+		from subscribe T1 left outer join (
+			select t1.subscribe_id
+			from (select s.category_id, u.subscribe_id
+				from subscribe s inner join usersubscribe u 
+					on s.id = u.subscribe_id
+				where u.user_id = #{id}
+				) t1 inner join category c 
+		on t1.category_id = c.id
+		) T2
+		on T1.id = T2.subscribe_id
+		where T2.subscribe_id is null
+	</select>
+	
 </mapper>

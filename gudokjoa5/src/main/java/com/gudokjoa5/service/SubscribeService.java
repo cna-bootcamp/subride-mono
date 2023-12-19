@@ -21,4 +21,6 @@ public interface SubscribeService {
 	public ResponseEntity<SubscribeDTO> getSubscribeDetail(long id);
 	
 	public ResponseEntity<List<SubscribeDTO>> getCanSubList(long id);
+	
+	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(long id);
 }

@@ -100,5 +100,14 @@ public class SubscribeController {
 	 * @설명 : 사용자가 신규등록 가능한 구독서비스 리스트 보여주기
 	 * @param: id - 사용자아이디
 	 * */
+	@Operation(operationId="canEnroll", summary="사용자가 신규등록 가능한 구독서비스 리스트 보여주기", 
+			description="사용자가 새로운 구독 서비스를 구독하였다면 이를 등록하기 위해, 현재 구독하고 있지 않은 서비스들 보여주기")
+	@Parameters({
+		@Parameter(name = "id", in = ParameterIn.QUERY, description = "사용자의 id", required=true)
+	})
+	@GetMapping(value="/subscribe/canenroll")
+	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(@RequestParam(value="id") long id) {
+		return subscribeService.getCanEnrollSubscribe(id);
+	}
 	
 }
