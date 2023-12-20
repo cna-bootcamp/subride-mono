@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gudokjoa5.dto.LoginRequestDTO;
+import com.gudokjoa5.dto.LoginResponseDTO;
 import com.gudokjoa5.model.User;
 import com.gudokjoa5.service.UserService;
 
@@ -63,5 +67,10 @@ public class UserController {
 		return userService.getUserListByGroupId(id);
 	}
 	
-
+	
+	@Operation(operationId="users-login", summary ="사용자 로그인하기", description="입력한 유저네임을 통해 로그인합니다.")
+	@PostMapping("/users/login")
+	public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+		return userService.login(loginRequestDTO);
+	}
 }
