@@ -75,13 +75,16 @@
 	</select>
 	
 	<insert id = "setSubscribeInsert"
-		useGeneratedKeys="true" 
-		keyProperty="id"
-		parameterType="com.gudokjoa5.dto.SubscribeEnrollDTO">
+	 	parameterType="com.gudokjoa5.dto.SubscribeEnrollDTO">
 		
-		insert into usersubscribe 
-		(user_id, subscribe_id, billing_date) 
-		values (#{userId}, #{subscribeId}, #{billingDate})
+		insert into usersubscribe (
+		user_id, 
+		subscribe_id, 
+		billing_date) values (
+		#{userId}, 
+		#{subscribeId}, 
+		#{billingDate}
+		)
 		
 	</insert>
 	

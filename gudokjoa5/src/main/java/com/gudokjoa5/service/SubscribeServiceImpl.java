@@ -103,16 +103,17 @@ public class SubscribeServiceImpl implements SubscribeService {
 
 
 	@Override
-	public Object setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) {
+	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) {
 		log.info("Start db insert");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		try {
+			System.out.println(subscribeEnrollDTO);
 			int re  = subscribeDao.setSubscribeInsert(subscribeEnrollDTO);
 			log.debug("result :"+ re);
 			if (re > 0) {
 	            map.put("message", "사용자의 새로운 구독서비스 등록 성공");
-	            return map;  // 성공 시 메세지를 설정하고 바로 반환
+	            return new ResponseEntity<Object>(map, HttpStatus.OK);  // 성공 시 메세지를 설정하고 바로 반환
 	        }
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +121,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 		
 		// 실패할 경우에만 실패 메세지를 설정
 	    map.put("message", "사용자의 새로운 구독서비스 등록 실패");
-	    return map;
+	    return new ResponseEntity<Object>(map, HttpStatus.OK);
 	}
 
 	

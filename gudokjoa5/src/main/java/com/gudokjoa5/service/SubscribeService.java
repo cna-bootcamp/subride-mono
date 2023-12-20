@@ -25,5 +25,5 @@ public interface SubscribeService {
 	
 	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(long id);
 	
-	public Object setSubscribeInsert(SubscribeEnrollDTO uSubscribeEnrollDTO);
+	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO);
 }
