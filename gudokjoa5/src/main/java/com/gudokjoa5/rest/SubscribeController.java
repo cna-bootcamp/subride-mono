@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.dto.TotalFeeDTO;
 import com.gudokjoa5.service.SubscribeService;
 
@@ -18,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -114,15 +117,15 @@ public class SubscribeController {
 	 * @설명 : 사용자가 새로 가입한 구독서비스 추가하기
 	 * @param: id - 사용자아이디
 	 * */
-//	@Operation(operationId="enroll", summary="사용자가 새로 가입한 구독서비스 추가하기", 
-//			description="사용자가 새로 가입한 구독서비스를 내가 구독한 서비스 목록에 추가하기")
-//	
-//	@PostMapping(value="/subscribe/enroll")
-//	public Object setSubscribeInsert(
-//			@RequestBody  SubscribeEnrollDTO subscribeEnrollDTO
-//		) throws Exception { 
-//		
-//		return subscribeService.setSubscribeInsert(subscribeEnrollDTO);
-//	}
+	@Operation(operationId="enroll", summary="사용자가 새로 가입한 구독서비스 추가하기", 
+			description="사용자가 새로 가입한 구독서비스를 내가 구독한 서비스 목록에 추가하기")
+	
+	@PostMapping(value="/subscribe/enroll")
+	public Object setSubscribeInsert(
+			@RequestBody  SubscribeEnrollDTO subscribeEnrollDTO
+		) throws Exception { 
+		
+		return subscribeService.setSubscribeInsert(subscribeEnrollDTO);
+	}
 	
 }
