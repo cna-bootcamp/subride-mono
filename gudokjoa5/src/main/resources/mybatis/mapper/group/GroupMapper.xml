@@ -36,7 +36,7 @@
 	
 	<insert id="insertGroup"
 		parameterType="com.gudokjoa5.model.Group">
-		insert into group(
+		insert into `group` (
 		subscribe_id,
 		group_account,
 		leader_user,

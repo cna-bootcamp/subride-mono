@@ -44,13 +44,13 @@ public class GroupController {
 		
 	@Operation(operationId="groupCreate", summary="그룹 생성하기", description="그룹을 생성합니다 ")
 	@PostMapping("group/create")
-	public ResponseEntity <String> createGroup(@RequestBody GroupCreateDTO groupCreateDTO) {	
+	public ResponseEntity<Object> createGroup(@RequestBody GroupCreateDTO groupCreateDTO) {	
 		return groupService.insertGroup(groupCreateDTO);
 	} 
 	
 	@Operation(operationId="groupJoin", summary="그룹 참하기", description="그룹에 참여합니다 ")
 	@PostMapping("group/join")
-	public ResponseEntity <String> joinGroup(@RequestBody GroupJoinDTO groupJoinDTO) {	
+	public ResponseEntity <Object> joinGroup(@RequestBody GroupJoinDTO groupJoinDTO) {	
 		return groupService.joinGroup(groupJoinDTO);
 	} 
 

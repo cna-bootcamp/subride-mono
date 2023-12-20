@@ -1,5 +1,6 @@
 package com.gudokjoa5.service;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -88,13 +89,14 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	@Transactional
-	public ResponseEntity<String> insertGroup(GroupCreateDTO groupCreateDTO) {
-		String invitationCode = null;
+	public ResponseEntity<Object> insertGroup(GroupCreateDTO groupCreateDTO) {
+		String invitationCode = randomString();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		try {
 			Group group = null;
 			UserGroup userGroup = null;
-			SubscribeDTO subscribeDTO = subscribeDao.getSubscribeByName(groupCreateDTO.getGroupName()); 			
+			SubscribeDTO subscribeDTO = subscribeDao.getSubscribeByName(groupCreateDTO.getSubscribeName()); 			
 			group = new Group(
 					0,
 					subscribeDTO.getServiceId(),
@@ -117,12 +119,13 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 			);
 			
 			groupDao.insertUserGroup(userGroup);
-			invitationCode = randomString();
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		map.put("invitationCode", invitationCode);
 		
-		return new ResponseEntity<String> (invitationCode, HttpStatus.OK);	
+		return new ResponseEntity<Object> (map, HttpStatus.OK);	
 	}
 	
 	private String randomString() {
@@ -142,14 +145,15 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	@Transactional
-	public ResponseEntity<String> joinGroup(GroupJoinDTO groupJoinDTO) {
+	public ResponseEntity<Object> joinGroup(GroupJoinDTO groupJoinDTO) {
 		String msg = "";
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		UserGroup userGroup = null;
 		try {
 			Group createdGroup = groupDao.getGroupByInvitationCode(groupJoinDTO.getInvitationCode());
-			if(createdGroup == null){ 
-				return null;
-			}
+//			if(createdGroup == null){ 
+//				return null;
+//			}
 			
 			userGroup = new UserGroup(
 					0,
@@ -163,7 +167,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String> (msg, HttpStatus.OK);
+		map.put("message", msg);
+		return new ResponseEntity<Object> (map, HttpStatus.OK);
 	}
 
 }

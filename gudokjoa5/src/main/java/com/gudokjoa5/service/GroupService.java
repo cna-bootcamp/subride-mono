@@ -13,7 +13,7 @@ public interface GroupService {
 
 	public ResponseEntity <List<GroupDTO>> getGroupList(long id); 
 	
-	public ResponseEntity <String> insertGroup(GroupCreateDTO groupCreateDTO);
+	public ResponseEntity <Object> insertGroup(GroupCreateDTO groupCreateDTO);
 	
-	public ResponseEntity <String> joinGroup(GroupJoinDTO groupJoinDTO);
+	public ResponseEntity <Object> joinGroup(GroupJoinDTO groupJoinDTO);
 }
