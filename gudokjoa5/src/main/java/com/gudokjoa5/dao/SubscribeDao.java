@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.dto.TotalFeeDTO;
 
 @Mapper
@@ -21,4 +22,6 @@ public interface SubscribeDao {
 	List<SubscribeDTO> getCanSubList(long id) throws Exception;
 	
 	List<SubscribeDTO> getCanEnrollSubscribe(long id) throws Exception;
+	
+	int setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) throws Exception;
 }

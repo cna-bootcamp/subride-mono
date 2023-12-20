@@ -110,4 +110,19 @@ public class SubscribeController {
 		return subscribeService.getCanEnrollSubscribe(id);
 	}
 	
+	/**
+	 * @설명 : 사용자가 새로 가입한 구독서비스 추가하기
+	 * @param: id - 사용자아이디
+	 * */
+//	@Operation(operationId="enroll", summary="사용자가 새로 가입한 구독서비스 추가하기", 
+//			description="사용자가 새로 가입한 구독서비스를 내가 구독한 서비스 목록에 추가하기")
+//	
+//	@PostMapping(value="/subscribe/enroll")
+//	public Object setSubscribeInsert(
+//			@RequestBody  SubscribeEnrollDTO subscribeEnrollDTO
+//		) throws Exception { 
+//		
+//		return subscribeService.setSubscribeInsert(subscribeEnrollDTO);
+//	}
+	
 }
