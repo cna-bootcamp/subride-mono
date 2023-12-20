@@ -34,8 +34,8 @@
 	on T1.group_id  = g.id
 	</select>
 	
-	<insert id="insertGroup" useGeneratedKeys="true" keyProperty="id"
-		parameterType="com.example.model.Group">
+	<insert id="insertGroup"
+		parameterType="com.gudokjoa5.model.Group">
 		insert into group(
 		subscribe_id,
 		group_account,
@@ -55,8 +55,8 @@
 		)
 	</insert>
 	
-	<insert id="insertUserGroup" useGeneratedKeys="true" keyProperty="id"
-		parameterType="com.example.model.UserGroup">
+	<insert id="insertUserGroup"
+		parameterType="com.gudokjoa5.model.UserGroup">
 		insert into usergroup(
 		user_id,
 		group_id,
