@@ -19,9 +19,12 @@ public interface SubscribeDao {
 	
 	SubscribeDTO getSubscribeDetail(long id) throws Exception;
 	
+	SubscribeDTO getSubscribeByName(String name) throws Exception;
+
 	List<SubscribeDTO> getCanSubList(long id) throws Exception;
 	
 	List<SubscribeDTO> getCanEnrollSubscribe(long id) throws Exception;
 	
 	int setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) throws Exception;
+
 }

@@ -30,6 +30,14 @@
 		where s.id = #{id}
 	</select>
 	
+	<select id = "getSubscribeByName" parameterType="String"
+		resultType="com.gudokjoa5.dto.SubscribeDTO">
+		select s.id, s.service_name, c.name, s.fee, s.description ,s.logo 
+		from subscribe s inner join category c 
+		on s.category_id  = c.id
+		where s.service_name = #{name}
+	</select>
+	
 	<select id = "getCanSubList" parameterType="long"
 		resultType="com.gudokjoa5.dto.SubscribeDTO">
 		select Ta1.id, Ta1.service_name, Ta1.fee, Ta1.category_id, Ta1.logo, Ta1.description

@@ -33,5 +33,69 @@
 	)	T1 inner join `group` g 
 	on T1.group_id  = g.id
 	</select>
+	
+	<insert id="insertGroup"
+		parameterType="com.gudokjoa5.model.Group">
+		insert into `group` (
+		subscribe_id,
+		group_account,
+		leader_user,
+		is_active,
+		group_name,
+		billing_date,
+		invitation_code
+		) values(
+		#{subscribeId},
+		#{groupAccount},
+		#{leaderUser},
+		#{isActive},
+		#{groupName},
+		#{billingDate},
+		#{invitationCode}
+		)
+	</insert>
+	
+	<insert id="insertUserGroup"
+		parameterType="com.gudokjoa5.model.UserGroup">
+		insert into usergroup(
+		user_id,
+		group_id,
+		is_active
+		) values(
+		#{userId},
+		#{groupId},
+		#{isActive}
+		)
+	</insert>
+	
+	
+	<select id="getGroupByGroupName" parameterType="String"
+		resultType="com.gudokjoa5.model.Group">
+		select g.id, 
+		g.subscribe_id, 
+		g.group_account, 
+		g.leader_user, 
+		g.is_active, 
+		g.group_name, 
+		g.billing_date, 
+		g.invitation_code
+		from `group` g
+		where g.group_name = #{groupname}
+	</select>
+	
+	<select id="getGroupByInvitationCode" parameterType="String"
+		resultType="com.gudokjoa5.model.Group">
+		select g.id, 
+		g.subscribe_id, 
+		g.group_account, 
+		g.leader_user, 
+		g.is_active, 
+		g.group_name, 
+		g.billing_date, 
+		g.invitation_code
+		from `group` g
+		where g.invitation_code = #{invitationcode}
+	</select>
+
 
 </mapper>
