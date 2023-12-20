@@ -10,4 +10,6 @@ public interface UserService {
 
 	public ResponseEntity <List<User>> getUserList();
 	public ResponseEntity <User> getUserById(long id);
+	public ResponseEntity <List<User>> getUserListByGroupId(long id);
+
 }

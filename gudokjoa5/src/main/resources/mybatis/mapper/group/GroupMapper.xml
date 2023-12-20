@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gudokjoa5.dao.GroupDao">
+	<select id="getGroup" parameterType="long"
+	resultType="com.gudokjoa5.model.Group">
+	select g.id, 
+	g.subscribe_id, 
+	g.group_account, 
+	g.leader_user, 
+	g.is_active, 
+	g.group_name, 
+	g.billing_date, 
+	g.invitation_code
+	from `group` g
+	where g.id = #{id}
+	</select>
+	
+	<select id="getGroupList" parameterType="long"
+	resultType="com.gudokjoa5.model.Group">
+	SELECT 
+	g.id,
+	g.subscribe_id,
+	g.group_account,
+	g.leader_user,
+	g.is_active,
+	g.group_name,
+	g.billing_date,
+	g.invitation_code
+	FROM (
+		select u.group_id
+		FROM usergroup u 
+		where u.user_id = #{id}
+	)	T1 inner join `group` g 
+	on T1.group_id  = g.id
+	</select>
+
+</mapper>

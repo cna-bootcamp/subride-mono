@@ -1,7 +1,5 @@
 package com.gudokjoa5.model;
 
-import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +17,7 @@ public class Group {
 	private String groupAccount; // 대표계좌
 	private long leaderUser;  // 그룹장
 	private int isActive; // 활성화 여부
+	private String groupName;
+	private int billigDate;
+	private String invitationCode;
 }

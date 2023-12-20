@@ -40,10 +40,27 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 	
+	
+	
+	
+	
+	
 	@GetMapping(value="/userlist", produces = "application/json")
 	@Operation(operationId="userlist", summary="사용자 전체정보 가지고 오기", description="사용자 전체정보를 제공합니다.")
 	public ResponseEntity <List<User>> getUserList() {
 		return userService.getUserList(); // 주석
+	}
+	
+	
+	
+	
+	@Operation(operationId="users-group", summary ="그룹에 속한 사용자 목록 가져오기", description="  그룹에 속한 사용자 목록을 제공합니다.")
+	@Parameters({
+		@Parameter(name = "groupId", in = ParameterIn.QUERY, description = "group id", required=true)
+	})
+	@GetMapping("/users/group")
+	public ResponseEntity<List<User>> getUserListByGroupId(@RequestParam(value="groupId") long id) {
+		return userService.getUserListByGroupId(id);
 	}
 	
 

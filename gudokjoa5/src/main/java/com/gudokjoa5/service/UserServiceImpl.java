@@ -48,4 +48,16 @@ public class UserServiceImpl implements UserService {
 		return new ResponseEntity<List<User>> (list, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<List<User>> getUserListByGroupId(long id) {
+		List<User> list = null;
+		try {
+			log.info("Start db select");
+			list = userDao.getUserByGroupId(id);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<User>> (list, HttpStatus.OK);
+	}
+
 }

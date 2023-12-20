@@ -17,7 +17,6 @@ import lombok.ToString;
  * */
 
 public class User {
-
 	private long id; // userID
 	private String username; // 닉네임
 	private String bankAccount; // 계좌번호
