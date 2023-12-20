@@ -36,4 +36,28 @@
 		) T1 inner join `user` us
 		on T1.user_id = us.id
 	</select>
+	
+	<select id="isUserNameExist"
+	resultType="com.gudokjoa5.dto.LoginResponseDTO"
+	parameterType="com.gudokjoa5.dto.LoginRequestDTO">
+		select u.id, u.username, u.bank_account, u.profile_img
+		from user u
+		where u.username = #{userName}
+	</select>
+	
+	<insert id = "createUser"
+	 	parameterType="com.gudokjoa5.model.User">
+		insert into user (
+		username,
+		bank_account,
+		profile_img ,
+		is_active
+		) values (
+		#{username},
+		#{bankAccount},
+		#{profileImg},
+		#{isActive}
+		)
+		
+	</insert>
 </mapper>
