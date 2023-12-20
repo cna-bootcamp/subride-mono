@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.dto.TotalFeeDTO;
 import com.gudokjoa5.service.SubscribeService;
 
@@ -108,6 +111,21 @@ public class SubscribeController {
 	@GetMapping(value="/subscribe/canenroll")
 	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(@RequestParam(value="id") long id) {
 		return subscribeService.getCanEnrollSubscribe(id);
+	}
+	
+	/**
+	 * @설명 : 사용자가 새로 가입한 구독서비스 추가하기
+	 * @param: id - 사용자아이디
+	 * */
+	@Operation(operationId="enroll", summary="사용자가 새로 가입한 구독서비스 추가하기", 
+			description="사용자가 새로 가입한 구독서비스를 내가 구독한 서비스 목록에 추가하기")
+	
+	@PostMapping("/subscribe/enroll")
+	public ResponseEntity<Object> setSubscribeInsert(
+			@RequestBody  SubscribeEnrollDTO subscribeEnrollDTO
+		) throws Exception { 
+		
+		return subscribeService.setSubscribeInsert(subscribeEnrollDTO);
 	}
 	
 }
