@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private CategoryDao categoryDao; // Dao 객체
+	private CategoryDao categoryDao; 
 	
 	@Override
 	public ResponseEntity<List<Category>> getCategoryList() {

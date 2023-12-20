@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gudokjoa5.dto.GroupCreateDTO;
 import com.gudokjoa5.dto.GroupDTO;
+import com.gudokjoa5.dto.GroupJoinDTO;
 import com.gudokjoa5.service.GroupService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +41,18 @@ public class GroupController {
 	public ResponseEntity <List<GroupDTO>> getGroupListById(long id) {	
 		return groupService.getGroupList(id);
 	}
+		
+	@Operation(operationId="groupCreate", summary="그룹 생성하기", description="그룹을 생성합니다 ")
+	@PostMapping("group/create")
+	public ResponseEntity <String> createGroup(@RequestBody GroupCreateDTO groupCreateDTO) {	
+		return groupService.insertGroup(groupCreateDTO);
+	} 
+	
+	@Operation(operationId="groupJoin", summary="그룹 참하기", description="그룹에 참여합니다 ")
+	@PostMapping("group/join")
+	public ResponseEntity <String> joinGroup(@RequestBody GroupJoinDTO groupJoinDTO) {	
+		return groupService.joinGroup(groupJoinDTO);
+	} 
 
-	
-	
+
 }
