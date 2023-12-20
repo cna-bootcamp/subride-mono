@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.dto.TotalFeeDTO;
 
 
@@ -19,4 +20,10 @@ public interface SubscribeService {
 	public ResponseEntity<TotalFeeDTO> getTotalFee(long id);
 	
 	public ResponseEntity<SubscribeDTO> getSubscribeDetail(long id);
+	
+	public ResponseEntity<List<SubscribeDTO>> getCanSubList(long id);
+	
+	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(long id);
+	
+	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO);
 }

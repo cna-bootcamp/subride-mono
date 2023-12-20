@@ -1,5 +1,6 @@
 package com.gudokjoa5.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudokjoa5.dao.SubscribeDao;
 import com.gudokjoa5.dto.SubscribeDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.dto.TotalFeeDTO;
 
 /**
@@ -66,10 +68,60 @@ public class SubscribeServiceImpl implements SubscribeService {
 		SubscribeDTO subscribeDTO = null;
 		try {
 			subscribeDTO = subscribeDao.getSubscribeDetail(id);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity <SubscribeDTO> (subscribeDTO, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<SubscribeDTO>> getCanSubList(long id) {
+		List<SubscribeDTO> list = null;
+		try {
+			list = subscribeDao.getCanSubList(id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<SubscribeDTO>> (list, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(long id) {
+		List<SubscribeDTO> list = null;
+		try {
+			list = subscribeDao.getCanEnrollSubscribe(id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<List<SubscribeDTO>> (list, HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) {
+		log.info("Start db insert");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		try {
+			System.out.println(subscribeEnrollDTO);
+			int re  = subscribeDao.setSubscribeInsert(subscribeEnrollDTO);
+			log.debug("result :"+ re);
+			if (re > 0) {
+	            map.put("message", "사용자의 새로운 구독서비스 등록 성공");
+	            return new ResponseEntity<Object>(map, HttpStatus.OK);  // 성공 시 메세지를 설정하고 바로 반환
+	        }
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// 실패할 경우에만 실패 메세지를 설정
+	    map.put("message", "사용자의 새로운 구독서비스 등록 실패");
+	    return new ResponseEntity<Object>(map, HttpStatus.OK);
 	}
 
 	
