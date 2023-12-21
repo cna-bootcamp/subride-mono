@@ -40,15 +40,15 @@
 	
 	<select id = "getCanSubList" parameterType="long"
 		resultType="com.gudokjoa5.dto.SubscribeDTO">
-		select Ta1.id, Ta1.service_name, Ta1.fee, Ta1.category_id, Ta1.logo, Ta1.description
+		select Ta1.id, Ta1.service_name, Ta2.category_name, Ta1.fee, Ta1.description, Ta1.logo
 		from (select s.id, s.service_name, s.fee, s.category_id, s.logo, s.description
 			from subscribe s inner join usersubscribe u 
 			on s.id = u.subscribe_id
 			where u.user_id = #{id}
 		) Ta1 inner join (
-			select A1.subscribe_id
+			select A1.subscribe_id, A1.category_name
 			from (
-				select t1.subscribe_id
+				select t1.subscribe_id, c.name category_name
 				from (select s.category_id, u.subscribe_id
 					from subscribe s inner join usersubscribe u 
 					on s.id = u.subscribe_id
@@ -63,23 +63,27 @@
 			) A2 on A1.subscribe_id = A2.subscribe_id
 			WHERE  A2.subscribe_id is NULL
 		) Ta2
-		on Ta1.id = Ta2.subscribe_id;
+		on Ta1.id = Ta2.subscribe_id
 	</select>
 	
 	<select id = "getCanEnrollSubscribe" parameterType="long"
 		resultType="com.gudokjoa5.dto.SubscribeDTO">
-		select T1.id, T1.service_name, T1.fee, T1.category_id, T1.description, T1.logo
-		from subscribe T1 left outer join (
-			select t1.subscribe_id
-			from (select s.category_id, u.subscribe_id
-				from subscribe s inner join usersubscribe u 
-					on s.id = u.subscribe_id
-				where u.user_id = #{id}
-				) t1 inner join category c 
-		on t1.category_id = c.id
-		) T2
-		on T1.id = T2.subscribe_id
-		where T2.subscribe_id is null
+		select T3.id, T3.service_name, c1.name category_name, T3.fee, T3.description, T3.logo
+		from (
+			select T1.id, T1.service_name, T1.fee, T1.category_id, T1.description, T1.logo
+				from subscribe T1 left outer join (
+					select t1.subscribe_id
+					from (select s.category_id, u.subscribe_id
+						from subscribe s inner join usersubscribe u 
+							on s.id = u.subscribe_id
+						where u.user_id = #{id}
+						) t1 inner join category c 
+				on t1.category_id = c.id
+				) T2
+				on T1.id = T2.subscribe_id
+				where T2.subscribe_id is null
+		) T3 inner join category c1 
+		on T3.category_id = c1.id
 	</select>
 	
 	<insert id = "setSubscribeInsert"
