@@ -131,7 +131,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	private String randomString() {
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
-		int targetStringLength = 16;
+		int targetStringLength = 4;
 		Random random = new Random();
 
 		String generatedString = random.ints(leftLimit,rightLimit + 1)
@@ -149,16 +149,33 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		String msg = "";
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		UserGroup userGroup = null;
+		List<GroupDTO> groupDTOList = null; // 현재 내가 속해있는 그룹 리스트 받을 변수
+		
 		try {
 			Group createdGroup = groupDao.getGroupByInvitationCode(groupJoinDTO.getInvitationCode());
-//			if(createdGroup == null){ 
-//				return null;
-//			}
+			if(createdGroup == null){
+				msg = "해당코드를 가진 방이 없습니다.";
+				map.put("message", msg);
+				return new ResponseEntity<Object> (map, HttpStatus.NOT_FOUND);
+			}
+			
+			// 방에 조인하기 전에, 내가 현재 그방에 들어가 있는 지 확인.
+			List<Group> groupList = groupDao.getGroupList(groupJoinDTO.getId()); // 유저의 아이디를 통해 해당 유저가 현재 어떤 방에 있는지 확인.
+			System.out.println(groupList);
+			for(Group group: groupList) {
+				System.out.println("for문 돌기 시작");
+				System.out.println(group.getInvitationCode());
+				if (groupJoinDTO.getInvitationCode().equals(group.getInvitationCode()) ) { // 들어가려는 방이 현재 리스트에 있다면..
+					msg = "이미 방에 초대되어 있습니다.";
+					map.put("message", msg); 
+					return new ResponseEntity<Object> (map, HttpStatus.NOT_FOUND);
+				}
+			}
 			
 			userGroup = new UserGroup(
 					0,
-					groupJoinDTO.getId(),
-					createdGroup.getId(),
+					groupJoinDTO.getId(), //유저 아이디
+					createdGroup.getId(), //다인팟 아이디
 					1
 			);
 			
