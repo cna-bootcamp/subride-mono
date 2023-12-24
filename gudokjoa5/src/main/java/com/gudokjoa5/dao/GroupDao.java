@@ -19,7 +19,7 @@ public interface GroupDao {
 	
 	int insertUserGroup(UserGroup userGroup) throws Exception;
 	
-	Group getGroupByGroupName(String groupname) throws Exception;
+	Group getGroupByGroupName(String groupname, long leaderId) throws Exception;
 	
 	Group getGroupByInvitationCode(String invitationcode) throws Exception;
 }
