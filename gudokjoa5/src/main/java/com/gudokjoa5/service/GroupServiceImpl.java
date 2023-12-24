@@ -108,13 +108,24 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 					invitationCode
 			);
 			
+			
+			// 새로운 그룹을 만들기 전에 해당유저가 같은 이름을 만든 방이 있는지 확인.
+			List<Group> groupList = groupDao.getGroupList(groupCreateDTO.getLeaderUser());
+			
+			for(Group group1: groupList) {
+				if (groupCreateDTO.getGroupName().equals(group1.getGroupName())) {
+					map.put("massage", "이미 존재하는 방이름 입니다.");
+					return new ResponseEntity<Object> (map, HttpStatus.BAD_REQUEST);	
+				}
+			}
+			
 			groupDao.insertGroup(group);
 			
-			Group createdGroup = groupDao.getGroupByGroupName(groupCreateDTO.getGroupName());
+			Group createdGroup = groupDao.getGroupByGroupName(groupCreateDTO.getGroupName(), groupCreateDTO.getLeaderUser()); // 여기가 문제임.
 			userGroup = new UserGroup(
 					0,
 					groupCreateDTO.getLeaderUser(),
-					createdGroup.getId(),
+					createdGroup.getId(), // 방의 아이디를 받는 거임.
 					1
 			);
 			

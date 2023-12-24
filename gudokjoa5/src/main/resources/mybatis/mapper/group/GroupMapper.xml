@@ -69,7 +69,7 @@
 	</insert>
 	
 	
-	<select id="getGroupByGroupName" parameterType="String"
+	<select id="getGroupByGroupName" parameterType="map"
 		resultType="com.gudokjoa5.model.Group">
 		select g.id, 
 		g.subscribe_id, 
@@ -80,7 +80,7 @@
 		g.billing_date, 
 		g.invitation_code
 		from `group` g
-		where g.group_name = #{groupname}
+		where g.group_name = #{groupname} and g.leader_user = #{leaderId}
 	</select>
 	
 	<select id="getGroupByInvitationCode" parameterType="String"
