@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gudokjoa5.dao.SubscribeDao;
 import com.gudokjoa5.dao.UserDao;
 import com.gudokjoa5.dto.LoginRequestDTO;
 import com.gudokjoa5.dto.LoginResponseDTO;
+import com.gudokjoa5.dto.SubscribeEnrollDTO;
 import com.gudokjoa5.model.User;
 
 
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDao userDao; //Dao 객체 이용함.
+	@Autowired
+	private SubscribeDao subscribeDao; // Dao 객체
 	
 	@Override
 	public ResponseEntity<User> getUserById(long id) {
@@ -69,7 +73,24 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequestDTO) {
 		LoginResponseDTO loginResponseDTO = null;
 		User user = null;
+		
+		SubscribeEnrollDTO subscribeEnrollDTO1 = null; // 새로운 유저의 경우 구독서비스 디폴트로 2개 넣기
+		SubscribeEnrollDTO subscribeEnrollDTO2 = null;
+		
 		int profileRandom = (int)((Math.random()*10000)%5) + 1; // 1에서 5까지
+		int subscribeRandomID1 = 0;
+		int subscribeRandomID2 = 0;
+		
+		//구독서비스 id가 같은게 나오는 걸 방지하기 위해
+		while(true) {
+			subscribeRandomID1 = (int)((Math.random()*10000)%24) + 1; // 1에서 24까지 (현재는 구독서비스가 24개 있음)
+			subscribeRandomID2 = (int)((Math.random()*10000)%24) + 1; // 1에서 24까지			
+			
+			if (subscribeRandomID1 != subscribeRandomID2) {
+				break;
+			}
+		}
+		
 		
 		try {
 			loginResponseDTO = userDao.isUserNameExist(loginRequestDTO);
@@ -83,7 +104,20 @@ public class UserServiceImpl implements UserService {
 				);
 				
 				userDao.createUser(user); // insert 했음.
+				
 				loginResponseDTO = userDao.isUserNameExist(loginRequestDTO);
+				
+				//default로 구독서비스 2개정도 구독하는 걸로 하기
+				subscribeEnrollDTO1 = new SubscribeEnrollDTO(
+						loginResponseDTO.getId(),
+						subscribeRandomID1, 
+						21);
+				subscribeEnrollDTO2 = new SubscribeEnrollDTO(
+						loginResponseDTO.getId(),
+						subscribeRandomID2, 
+						21);
+				subscribeDao.setSubscribeInsert(subscribeEnrollDTO1);
+				subscribeDao.setSubscribeInsert(subscribeEnrollDTO2); // 랜덤으로 구독서비스 insert 끝
 			}	
 		} catch (Exception e) {
 			e.printStackTrace();
