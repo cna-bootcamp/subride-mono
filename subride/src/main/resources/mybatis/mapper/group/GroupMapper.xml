@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.subride.dao.GroupDao">
+	<select id="getGroup" parameterType="long"
+	resultType="com.subride.model.Group">
+	select g.id, 
+		g.subscribe_id,
+		g.group_account,
+		g.leader_user,
+		g.is_active,
+		g.group_name,
+		g.billing_date,
+		g.invitation_code
+	from `group` g
+	where g.id = #{id}
+	order by g.group_name
+	</select>
+
+	<select id="getGroupList" parameterType="String" resultType="com.subride.model.Group">
+		SELECT g.id, g.subscribe_id, g.group_account, g.leader_user, g.is_active,
+			g.group_name, g.billing_date, g.invitation_code
+		FROM `group` g
+		JOIN usergroup ug ON g.id = ug.group_id
+		WHERE ug.user_id = #{userId}
+		ORDER BY g.group_name
+	</select>
+	
+	<insert id="insertGroup"
+		parameterType="com.subride.model.Group">
+		insert into `group` (
+		subscribe_id,
+		group_account,
+		leader_user,
+		is_active,
+		group_name,
+		billing_date,
+		invitation_code
+		) values(
+		#{subscribeId},
+		#{groupAccount},
+		#{leaderUserId},
+		#{isActive},
+		#{groupName},
+		#{billingDate},
+		#{invitationCode}
+		)
+	</insert>
+	
+	<insert id="insertUserGroup"
+		parameterType="com.subride.model.UserGroup">
+		insert into usergroup(
+		user_id,
+		group_id,
+		is_active
+		) values(
+		#{userId},
+		#{groupId},
+		#{isActive}
+		)
+	</insert>
+	
+	
+	<select id="getGroupByGroupName" parameterType="map"
+		resultType="com.subride.model.Group">
+		select g.id, 
+		g.subscribe_id, 
+		g.group_account, 
+		g.leader_user, 
+		g.is_active, 
+		g.group_name, 
+		g.billing_date, 
+		g.invitation_code
+		from `group` g
+		where g.group_name = #{groupname} and g.leader_user = #{leaderUserId}
+	</select>
+	
+	<select id="getGroupByInvitationCode" parameterType="String"
+		resultType="com.subride.model.Group">
+		select g.id,
+		g.subscribe_id,
+		g.group_account,
+		g.leader_user,
+		g.is_active,
+		g.group_name,
+		g.billing_date,
+		g.invitation_code
+		from `group` g
+		where g.invitation_code = #{invitationcode}
+	</select>
+
+	<select id="getPayHistory" parameterType="long" resultType="com.subride.dto.UserPayDTO">
+		select g.id, u.user_id, u.user_name, g.group_id, g.pay_datetime
+		from `user` u
+		join `userpay` g ON u.user_id = g.user_id
+		where g.group_id = #{id}
+			AND g.pay_datetime >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
+		order by g.pay_datetime desc
+	</select>
+
+	<select id="isExceedMaxUser" parameterType="long" resultType="boolean">
+		SELECT
+			CASE
+				WHEN COUNT(ug.user_id) >= s.max_user THEN 'false'
+				ELSE 'true'
+			END AS can_join
+		FROM
+			`group` g
+		LEFT JOIN
+			usergroup ug ON g.id = ug.group_id
+		JOIN
+			subscribe s ON g.subscribe_id = s.id
+		WHERE
+			g.id = #{group_id}
+		GROUP BY
+			g.id;
+	</select>
+
+	<insert id="createPayHistory" parameterType="HashMap">
+		INSERT INTO userpay (user_id, group_id, pay_datetime)
+		VALUES
+		<foreach collection='list' index='index' item='pay' separator=','>
+		( #{pay.userId}, #{pay.groupId}, #{pay.payDateTime} )
+		</foreach>
+	</insert>
+</mapper>

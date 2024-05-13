@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:18081}
+  servlet:
+    context-path: ${SERVLET_CONTEXT_PATH:/}
+spring:
+  application:
+    name: subride
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME:subcrew}?useUnicode=true&characterEncoding=utf-8
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:P@ssw0rd$}
+    hikari:
+      connection-test-query: 'SELECT 1  '
+      connection-timeout: 5000
+      maximum-pool-size: 30
+      minimum-idle: 2
+      validation-timeout: 1000
+  #jpa configuration
+  jpa.properties.hibernate.show_sql: false
+  jpa.properties.hibernate.format_sql: false
+  jpa.properties.hibernate.transaction.coordinator_class: jdbc
+  jpa.hibernate.ddl-auto: update
+  jpa.database-platform: org.hibernate.dialect.MySQLDialect
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+springdoc:
+  packages-to-scan: com.subride.rest
+  paths-to-match: /**
+
+jwt:
+  secret: 8O2HQ13etL2BWZvYOiWsJ5uWFoLi6NBUG8divYVoCgtHVvlk3dqRksMl16toztDUeBTSIuOOPvHIrYq11G2BwQ==
+  expiration-time: 3600
+  refresh-token-expiration-time: 86400

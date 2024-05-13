@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.subride.dao.SubscribeDao">
+	<select id="getSusbscribeList" parameterType="String" resultType="com.subride.dto.SubscribeDTO">
+		SELECT s.id, s.service_name, c.name, s.fee, s.description, s.logo, s.max_user
+		FROM subscribe s
+		JOIN usersubscribe us ON s.id = us.subscribe_id
+		JOIN category c ON s.category_id = c.id
+		WHERE us.user_id = #{userId}
+		ORDER BY s.service_name
+	</select>
+
+	<select id="getTotalFee" parameterType="String" resultType="com.subride.dto.TotalFeeDTO">
+		SELECT
+			us.user_id,
+			ROUND(SUM(
+				CASE
+					WHEN ug.group_id IS NULL THEN s.fee
+					ELSE s.fee / (
+						SELECT COUNT(*)
+						FROM usergroup ug2
+						WHERE ug2.group_id = ug.group_id
+					)
+				END
+			), 0) AS total_fee,
+			ROUND(SUM(
+				CASE
+					WHEN ug.group_id IS NULL THEN s.fee - (s.fee / s.max_user)
+					ELSE 0
+		/*
+					ELSE (s.fee / s.max_user) * (s.max_user - (
+						SELECT COUNT(*)
+						FROM usergroup ug3
+						WHERE ug3.group_id = ug.group_id
+						))
+		*/
+				END
+			), 0) AS total_saved_amount,
+			0
+		FROM
+			usersubscribe us
+		JOIN
+			subscribe s ON s.id = us.subscribe_id
+		LEFT JOIN
+			usergroup ug ON us.user_id = ug.user_id
+			AND ug.group_id IN (
+				SELECT id
+				FROM `group`
+				WHERE subscribe_id = s.id
+			)
+		WHERE
+			us.user_id = #{userId}
+		GROUP BY
+			us.user_id
+	</select>
+
+
+	<select id="getSubscribeDetail" parameterType="long" resultType="com.subride.dto.SubscribeDTO">
+		SELECT s.id, s.service_name, c.name AS category_name, s.fee, s.description, s.logo, s.max_user
+		FROM subscribe s
+		JOIN category c ON s.category_id = c.id
+		WHERE s.id = #{id}
+	</select>
+
+	<select id="getSubscribeByName" parameterType="string" resultType="com.subride.dto.SubscribeDTO">
+		SELECT s.id, s.service_name, c.name AS category_name, s.fee, s.description, s.logo, s.max_user
+		FROM subscribe s
+		JOIN category c ON s.category_id = c.id
+		WHERE s.service_name = #{name}
+	</select>
+
+	<select id="getCanSubList" parameterType="String" resultType="com.subride.dto.SubscribeDTO">
+		SELECT s.id, s.service_name, c.name AS category_name, s.fee, s.description, s.logo, s.max_user
+		FROM subscribe s
+		JOIN usersubscribe us ON s.id = us.subscribe_id
+		JOIN category c ON s.category_id = c.id
+		WHERE us.user_id = #{userId}
+			AND us.subscribe_id NOT IN (
+				SELECT subscribe_id
+				FROM `group` g
+				JOIN usergroup ug ON g.id = ug.group_id
+				WHERE ug.user_id = #{userId}
+		ORDER BY s.service_name
+		)
+	</select>
+
+	<select id="getCanEnrollSubscribe" parameterType="java.util.Map" resultType="com.subride.dto.SubscribeDTO">
+		SELECT s.id, s.service_name, c.name AS category_name, s.fee, s.description, s.logo, s.max_user
+		FROM subscribe s
+		JOIN category c ON s.category_id = c.id
+		WHERE s.id NOT IN (
+			SELECT subscribe_id
+			FROM usersubscribe
+			WHERE user_id = #{userId}
+		)
+		<if test="categoryId != null">
+			AND s.category_id = #{categoryId}
+		</if>
+		ORDER BY s.service_name
+	</select>
+
+	<select id="isSubscribed" parameterType="java.util.Map" resultType="boolean">
+		SELECT
+			CASE
+				WHEN COUNT(*) > 0 THEN 'true'
+				ELSE 'false'
+			END AS is_subscribed
+		FROM
+			`usersubscribe` us
+		WHERE
+			us.user_id = #{userId} AND us.subscribe_id = #{subscribeId}
+	</select>
+
+	<insert id = "setSubscribeInsert"
+	 	parameterType="com.subride.dto.SubscribeEnrollDTO">
+		insert into usersubscribe (
+		user_id, 
+		subscribe_id, 
+		billing_date) values (
+		#{userId}, 
+		#{subscribeId}, 
+		#{billingDate}
+		)
+		
+	</insert>
+	
+</mapper>
