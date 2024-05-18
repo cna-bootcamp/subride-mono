@@ -5,9 +5,13 @@ import java.util.*;
 
 import com.subride.dao.GroupDao;
 import com.subride.dto.UserPayDTO;
+import com.subride.entity.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +28,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 
-@Tag(name="GROUP API", description="GROUP API입니다.")
+@Tag(name="썹그룹 API", description="썹 그룹 API입니다.")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/groups")
 @SecurityRequirement(name = "bearerAuth")
 @CrossOrigin(origins="*", allowedHeaders = "*")
 public class GroupController {
@@ -36,29 +40,52 @@ public class GroupController {
 	private final GroupService groupService;
 	
 	@Operation(operationId="groupsdetail", summary="그룹 정보 가져오기", description="하나의 그룹 정보 상세 내용을 제공합니다.")
-	@GetMapping("/group/detail")
-	public ResponseEntity <GroupDTO> getGroupById(@RequestParam(value = "id") long id) {
-		return groupService.getGroup(id);
+	@Parameters({
+			@Parameter(name = "id", in = ParameterIn.PATH, description = "썹그룹 ID", required=true),
+			@Parameter(name = "include", in = ParameterIn.QUERY, description = "응답 포함 리소스", required=false)
+	})
+	@GetMapping(value = "/{id}", params = "include")
+	public ResponseEntity<GroupDTO> getGroupById(@PathVariable long id,
+												 @RequestParam(value = "include", required = false) String includeParam) {
+
+		List<String> includes = Arrays.asList(includeParam.replaceAll("\\s", "").split(","));
+		return groupService.getGroup(id, includes);
 	}
-	
+
 	@Operation(operationId="groupslist", summary="그룹 목록 가져오기", description=" 사용자가 가입한 그룹 목록을 제공합니다.")
-	@GetMapping("/group/mylist")
-	public ResponseEntity <List<GroupDTO>> getGroupListById(@RequestParam(value = "id") String userId) {
-		return groupService.getGroupList(userId);
+	@Parameters({
+			@Parameter(name = "userId", in = ParameterIn.QUERY, description = "사용자ID", required=true),
+			@Parameter(name = "include", in = ParameterIn.QUERY, description = "응답 포함 리소스", required=false)
+	})
+	@GetMapping
+	public ResponseEntity <List<GroupDTO>> getGroupListById(@RequestParam(value = "userId") String userId,
+															@RequestParam(value = "include", required = false) String includeParam) {
+		List<String> includes = Arrays.asList(includeParam.replaceAll("\\s", "").split(","));
+		return groupService.getGroupList(userId, includes);
 	}
-		
+
 	@Operation(operationId="groupCreate", summary="그룹 생성하기", description="그룹을 생성합니다 ")
-	@PostMapping("group/create")
+	@io.swagger.v3.oas.annotations.parameters.RequestBody(
+			content = @Content(
+					schema = @Schema(implementation = GroupCreateDTO.class),
+					examples = {
+							@ExampleObject(
+									name = "그룹 생성 요청 예시",
+									value = "{\"groupName\":\"그룹명\",\"groupAccount\":\"그룹계정\",\"leaderUserId\":\"리더유저ID\",\"subscribeName\":\"구독서비스명\",\"billingDate\":\"구독료 납부일\"}"
+							)
+					}
+			)
+	)
+	@PostMapping
 	public ResponseEntity<Object> createGroup(@RequestBody GroupCreateDTO groupCreateDTO) {	
 		return groupService.insertGroup(groupCreateDTO);
 	} 
 	
 	@Operation(operationId="groupJoin", summary="그룹 참여하기", description="그룹에 참여합니다 ")
-	@PostMapping("group/join")
-	public ResponseEntity <Object> joinGroup(@RequestBody GroupJoinDTO groupJoinDTO) {	
+	@PostMapping("/members")
+	public ResponseEntity <Object> joinGroup(@RequestBody GroupJoinDTO groupJoinDTO) {
 		return groupService.joinGroup(groupJoinDTO);
 	}
-
 
 	@Autowired
 	private GroupDao groupDao;
@@ -72,7 +99,7 @@ public class GroupController {
 			@Parameter(name = "userId", in = ParameterIn.QUERY, description = "사용자의 id", required=true),
 			@Parameter(name = "groupId", in = ParameterIn.QUERY, description = "썹 그룹 id", required=true)
 	})
-	@PostMapping(value="group/createPayHistory")
+	@PostMapping("/test-data/pay-history")
 	public ResponseEntity<String> createPayHistory(@RequestParam(value="userId") String userId, @RequestParam(value="groupId", required=true) long groupId) {
 		ArrayList<UserPayDTO> list = new ArrayList<UserPayDTO>();
 		UserPayDTO userPayDTO = null;

@@ -18,7 +18,7 @@ public class GroupDTO {
 	private String groupName;
 	private int billingDate;
 	private String invitationCode;
-	private String leaderUsername;
+	private String leaderUserId;
 	private SubscribeDTO subscribeDTO;
 	private List<User> users;
 	private List<UserPayDTO> pays;

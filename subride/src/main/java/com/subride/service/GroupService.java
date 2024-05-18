@@ -9,9 +9,9 @@ import com.subride.dto.GroupDTO;
 import com.subride.dto.GroupJoinDTO;
 
 public interface GroupService {
-	public ResponseEntity <GroupDTO> getGroup(long id);
+	public ResponseEntity <GroupDTO> getGroup(long id, List<String> includes);
 
-	public ResponseEntity <List<GroupDTO>> getGroupList(String userId);
+	public ResponseEntity <List<GroupDTO>> getGroupList(String userId, List<String> includes);
 	
 	public ResponseEntity <Object> insertGroup(GroupCreateDTO groupCreateDTO);
 	

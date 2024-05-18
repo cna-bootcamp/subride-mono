@@ -84,7 +84,7 @@
 		)
 	</select>
 
-	<select id="getCanEnrollSubscribe" parameterType="java.util.Map" resultType="com.subride.dto.SubscribeDTO">
+	<select id="getEnrollServicesByCategory" parameterType="java.util.Map" resultType="com.subride.dto.SubscribeDTO">
 		SELECT s.id, s.service_name, c.name AS category_name, s.fee, s.description, s.logo, s.max_user
 		FROM subscribe s
 		JOIN category c ON s.category_id = c.id

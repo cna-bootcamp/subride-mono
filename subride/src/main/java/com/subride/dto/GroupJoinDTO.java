@@ -10,6 +10,6 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class GroupJoinDTO {
-	private String id;
+	private String userId;
 	private String invitationCode;
 }

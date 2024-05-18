@@ -23,7 +23,7 @@ public interface SubscribeDao {
 
 	List<SubscribeDTO> getCanSubList(String userId) throws Exception;
 	
-	List<SubscribeDTO> getCanEnrollSubscribe(String userId, Long categoryId) throws Exception;
+	List<SubscribeDTO> getEnrollServicesByCategory(Long categoryId, String userId) throws Exception;
 
 	boolean isSubscribed(String userId, long subscribeId) throws Exception;
 

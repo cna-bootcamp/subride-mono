@@ -103,10 +103,10 @@ public class SubscribeServiceImpl implements SubscribeService {
 
 
 	@Override
-	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(String userId, Long categoryId) {
+	public ResponseEntity<List<SubscribeDTO>> getEnrollServicesByCategory(Long categoryId, String userId) {
 		List<SubscribeDTO> list = null;
 		try {
-			list = subscribeDao.getCanEnrollSubscribe(userId, categoryId);
+			list = subscribeDao.getEnrollServicesByCategory(categoryId, userId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

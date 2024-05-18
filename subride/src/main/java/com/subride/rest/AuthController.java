@@ -3,9 +3,11 @@ package com.subride.rest;
 import com.subride.dto.*;
 import com.subride.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name="Auth API", description="인증/인가 API")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

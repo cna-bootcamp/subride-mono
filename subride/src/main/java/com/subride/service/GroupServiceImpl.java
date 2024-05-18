@@ -41,18 +41,18 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<GroupDTO> getGroup(long id) {
-		GroupDTO groupDTO = groupDTO(id);
+	public ResponseEntity<GroupDTO> getGroup(long id, List<String> includes) {
+		GroupDTO groupDTO = groupDTO(id, includes);
 		return new ResponseEntity<GroupDTO> (groupDTO, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<List<GroupDTO>> getGroupList(String userId) {
+	public ResponseEntity<List<GroupDTO>> getGroupList(String userId, List<String> includes) {
 		List<GroupDTO> groupDTOList = new LinkedList<>();
 		try {
 			List<Group> groupList = groupDao.getGroupList(userId);
 			for(Group group: groupList) {
-				groupDTOList.add(groupDTO(group.getId()));
+				groupDTOList.add(groupDTO(group.getId(), includes));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,33 +60,46 @@ public class GroupServiceImpl implements GroupService {
 		
 		return new ResponseEntity<List<GroupDTO>> (groupDTOList, HttpStatus.OK);
 	}
-	
-	@Transactional
-	private GroupDTO groupDTO(long id) {
+
+	private GroupDTO groupDTO(long id, List<String> includes) {
 		GroupDTO groupDTO = null;
 		try {
 			Group group = null;
 			List<User> users = null;
 			SubscribeDTO subscribeDTO = null;
-			User leaderUser = null;
 			List<UserPayDTO> payHistory = null;
 
 			group = groupDao.getGroup(id);
-			subscribeDTO = subscribeDao.getSubscribeDetail(group.getSubscribeId());
-			users = userDao.getUserByGroupId(id);
-			leaderUser = userDao.selectUser(group.getLeaderUserId());
-			payHistory = groupDao.getPayHistory(id);
+			if(group != null) {
+				if (includes != null && !includes.isEmpty()) {
+					for (String include : includes) {
+						switch (include) {
+							case "subscribe":
+								subscribeDTO = subscribeDao.getSubscribeDetail(group.getSubscribeId());
+								break;
+							case "users":
+								users = userDao.getUserByGroupId(id);
+								break;
+							case "pays":
+								payHistory = groupDao.getPayHistory(id);
+								break;
+							default:
+								throw new IllegalArgumentException("Unsupported include parameter: " + include);
+						}
+					}
+				}
+			}
 
 			groupDTO = new GroupDTO(
-						group.getId(),
-						group.getGroupName(),
-						group.getBillingDate(),
-						group.getInvitationCode(),
-						leaderUser.getUserName(),
-						subscribeDTO,
-						users,
-						payHistory
-					);
+					group != null ? group.getId() : 0,
+					group != null ? group.getGroupName() : null,
+					group != null ? group.getBillingDate() : 0,
+					group != null ? group.getInvitationCode() : null,
+					group != null ? group.getLeaderUserId() : null,
+					subscribeDTO,
+					users,
+					payHistory);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,7 +184,7 @@ public class GroupServiceImpl implements GroupService {
 			}
 
 			// 방에 조인하기 전에, 내가 현재 그방에 들어가 있는 지 확인.
-			List<Group> groupList = groupDao.getGroupList(groupJoinDTO.getId()); // 유저의 아이디를 통해 해당 유저가 현재 어떤 방에 있는지 확인.
+			List<Group> groupList = groupDao.getGroupList(groupJoinDTO.getUserId()); // 유저의 아이디를 통해 해당 유저가 현재 어떤 방에 있는지 확인.
 			System.out.println(groupList);
 			for(Group group: groupList) {
 				System.out.println("for문 돌기 시작");
@@ -185,7 +198,7 @@ public class GroupServiceImpl implements GroupService {
 			
 			userGroup = new UserGroup(
 					0,
-					groupJoinDTO.getId(), //유저 아이디
+					groupJoinDTO.getUserId(), //유저 아이디
 					createdGroup.getId(), //다인팟 아이디
 					1
 			);
@@ -193,8 +206,8 @@ public class GroupServiceImpl implements GroupService {
 			groupDao.insertUserGroup(userGroup);
 
 			//-- 유저의 구독 리스트에 없으면 자동 추가
-			if(!subscribeDao.isSubscribed(groupJoinDTO.getId(), createdGroup.getSubscribeId())) {
-				SubscribeEnrollDTO subscribeEnrollDTO = new SubscribeEnrollDTO(groupJoinDTO.getId(), createdGroup.getSubscribeId(), createdGroup.getBillingDate());
+			if(!subscribeDao.isSubscribed(groupJoinDTO.getUserId(), createdGroup.getSubscribeId())) {
+				SubscribeEnrollDTO subscribeEnrollDTO = new SubscribeEnrollDTO(groupJoinDTO.getUserId(), createdGroup.getSubscribeId(), createdGroup.getBillingDate());
 				subscribeDao.setSubscribeInsert(subscribeEnrollDTO);
 			}
 

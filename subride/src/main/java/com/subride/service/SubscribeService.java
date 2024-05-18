@@ -23,7 +23,7 @@ public interface SubscribeService {
 	
 	public ResponseEntity<List<SubscribeDTO>> getCanSubList(String userId);
 	
-	public ResponseEntity<List<SubscribeDTO>> getCanEnrollSubscribe(String userId, Long categoryId);
+	public ResponseEntity<List<SubscribeDTO>> getEnrollServicesByCategory(Long categoryId, String userId);
 	
 	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO);
 }

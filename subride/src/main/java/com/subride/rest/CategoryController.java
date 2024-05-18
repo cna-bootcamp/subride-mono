@@ -17,10 +17,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name="Catergory API", description="Catergory API입니다.")
+@Tag(name="구독서비스 Catergory API", description="구독서비스 Catergory API입니다.")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/categories")
 @SecurityRequirement(name = "bearerAuth")
 @CrossOrigin(origins="*", allowedHeaders = "*")
 public class CategoryController {
@@ -29,9 +29,8 @@ public class CategoryController {
 	private final CategoryService categoryService;
 	
 	@Operation(operationId="categories", summary="카테고리 목록 가져오기", description="카테고리 목록을 제공합니다.")
-	@GetMapping("/categories")
+	@GetMapping
 	public ResponseEntity <List<Category>> getCategoryList() {
-		
 		return categoryService.getCategoryList();
 	}
 }
