@@ -117,5 +117,18 @@ public class SubscribeController {
 		
 		return subscribeService.setSubscribeInsert(subscribeEnrollDTO);
 	}
-	
+
+	/*
+	구독서비스 가입 취소
+	 */
+	@Operation(operationId="unsubscribe", summary="구독취소",
+			description="구독 취소를 합니다. ")
+	@Parameters({
+			@Parameter(name = "userId", in = ParameterIn.QUERY, description = "사용자의 id", required=true),
+			@Parameter(name = "subscribeId", in = ParameterIn.PATH, description = "서비스 id", required=true)
+	})
+	@DeleteMapping("/{subscribeId}")
+	public ResponseEntity<String> unsubscribeSub(@RequestParam String userId, @PathVariable long subscribeId) {
+		return subscribeService.unsubscribeSub(userId, subscribeId);
+	}
 }

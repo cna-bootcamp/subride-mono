@@ -87,6 +87,20 @@ public class GroupController {
 		return groupService.joinGroup(groupJoinDTO);
 	}
 
+	/*
+	썹그룸 참여 취소
+	 */
+	@Operation(operationId="cancel-join", summary="썹그룹 참여취소",
+			description="썹그룹 참여를 취소 합니다. ")
+	@Parameters({
+			@Parameter(name = "userId", in = ParameterIn.QUERY, description = "사용자의 id", required=true),
+			@Parameter(name = "groupId", in = ParameterIn.PATH, description = "썹그룹 id", required=true)
+	})
+	@DeleteMapping("/{groupId}")
+	public ResponseEntity<String> cancelJoin(@RequestParam String userId, @PathVariable long groupId) {
+		return groupService.cancelJoin(userId, groupId);
+	}
+
 	@Autowired
 	private GroupDao groupDao;
 	/**

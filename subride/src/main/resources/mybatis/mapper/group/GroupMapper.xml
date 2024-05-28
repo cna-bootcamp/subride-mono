@@ -122,4 +122,11 @@
 		( #{pay.userId}, #{pay.groupId}, #{pay.payDateTime} )
 		</foreach>
 	</insert>
+
+	<select id="cancelJoin" parameterType="java.util.Map">
+		DELETE
+		FROM `usergroup` ug
+		WHERE
+		ug.user_id = #{userId} AND ug.group_id = #{groupId}
+	</select>
 </mapper>

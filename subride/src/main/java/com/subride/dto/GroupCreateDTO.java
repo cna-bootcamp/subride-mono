@@ -13,6 +13,6 @@ public class GroupCreateDTO {
 	private String groupAccount;
 	private String leaderUserId;
 	private String groupName;
-	private String subscribeName;
+	private Long subscribeId;
 	private int billingDate;
 }

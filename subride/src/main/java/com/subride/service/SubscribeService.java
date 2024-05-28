@@ -26,4 +26,6 @@ public interface SubscribeService {
 	public ResponseEntity<List<SubscribeDTO>> getEnrollServicesByCategory(Long categoryId, String userId);
 	
 	public ResponseEntity<Object> setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO);
+
+	public ResponseEntity<String> unsubscribeSub(String userId, long subscribeId);
 }

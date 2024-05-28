@@ -123,5 +123,11 @@
 		)
 		
 	</insert>
-	
+
+	<select id="unsubscribeSub" parameterType="java.util.Map">
+		DELETE
+		FROM `usersubscribe` us
+		WHERE
+		us.user_id = #{userId} AND us.subscribe_id = #{subscribeId}
+	</select>
 </mapper>

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -116,7 +118,8 @@ public class GroupServiceImpl implements GroupService {
 		try {
 			Group group = null;
 			UserGroup userGroup = null;
-			SubscribeDTO subscribeDTO = subscribeDao.getSubscribeByName(groupCreateDTO.getSubscribeName()); 			
+			SubscribeDTO subscribeDTO = subscribeDao.getSubscribeDetail(groupCreateDTO.getSubscribeId());
+
 			group = new Group(
 					0,
 					subscribeDTO.getServiceId(),
@@ -219,4 +222,13 @@ public class GroupServiceImpl implements GroupService {
 		return new ResponseEntity<Object> (map, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<String> cancelJoin(@RequestParam String userId, @PathVariable long groupId) {
+		try {
+			groupDao.cancelJoin(userId, groupId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>("썹 그룹 참여를 취소하였습니다.", HttpStatus.OK);
+	}
 }

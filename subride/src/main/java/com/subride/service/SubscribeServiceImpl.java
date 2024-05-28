@@ -137,5 +137,17 @@ public class SubscribeServiceImpl implements SubscribeService {
 	    return new ResponseEntity<Object>(map, HttpStatus.OK);
 	}
 
+	/*
+	구독취소
+	 */
+	@Override
+	public ResponseEntity<String> unsubscribeSub(String userId, long subscribeId) {
+		try {
+			subscribeDao.unsubscribeSub(userId, subscribeId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>("구독을 취소하였습니다.", HttpStatus.OK);
+	}
 	
 }

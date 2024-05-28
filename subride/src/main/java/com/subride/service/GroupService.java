@@ -17,4 +17,5 @@ public interface GroupService {
 	
 	public ResponseEntity <Object> joinGroup(GroupJoinDTO groupJoinDTO);
 
+	public ResponseEntity<String> cancelJoin(String userId, long groupId);
 }

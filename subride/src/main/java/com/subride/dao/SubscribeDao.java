@@ -18,7 +18,7 @@ public interface SubscribeDao {
 	TotalFeeDTO getTotalFee(String userId) throws Exception;
 	
 	SubscribeDTO getSubscribeDetail(long id) throws Exception;
-	
+
 	SubscribeDTO getSubscribeByName(String name) throws Exception;
 
 	List<SubscribeDTO> getCanSubList(String userId) throws Exception;
@@ -28,5 +28,7 @@ public interface SubscribeDao {
 	boolean isSubscribed(String userId, long subscribeId) throws Exception;
 
 	int setSubscribeInsert(SubscribeEnrollDTO subscribeEnrollDTO) throws Exception;
+
+	void unsubscribeSub(String userId, long subscribeId) throws Exception;
 
 }

@@ -30,4 +30,7 @@ public interface GroupDao {
 	int createPayHistory(ArrayList<UserPayDTO> list) throws Exception;
 
 	boolean isExceedMaxUser(long groupId) throws Exception;
+
+	void cancelJoin(String userId, long groupId) throws Exception;
+
 }
