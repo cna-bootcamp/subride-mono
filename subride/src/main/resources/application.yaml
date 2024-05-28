@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:18081}
+  port: ${PORT:18079}
   servlet:
     context-path: ${SERVLET_CONTEXT_PATH:/}
 spring:
@@ -7,7 +7,7 @@ spring:
     name: subride
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME:subcrew}?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME:subride}?useUnicode=true&characterEncoding=utf-8
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:P@ssw0rd$}
     hikari:
